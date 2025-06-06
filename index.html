@@ -1,626 +1,202 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AskMyShoe.com</title>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>AskMyShoe - Home</title> 
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
-      line-height: 1.6;
+      font-family: Arial, sans-serif;
     }
     header {
-      background: #1a1a1a;
-      color: #fff;
-      padding: 1em 2em;
-      display: flex;
-      justify-content: space-between; /* Space out title/search and icons */
-      align-items: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    header .header-left { /* New wrapper for title and search */
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    header .site-title {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #fff;
-      text-decoration: none;
-    }
-    header input {
-      padding: 0.7em 1em;
-      border: none;
-      border-radius: 5px;
-      width: 250px;
-      /* Made transparent */
-      background-color: transparent;
-      color: #fff;
-      border: 1px solid #777; /* Subtle border for definition */
-    }
-    header input::placeholder {
-      color: #a0a0a0; /* Better contrast */
-    }
-    header .icons {
-      display: flex;
-      align-items: center;
-      font-size: 1.1em;
-      gap: 1.5em;
-    }
-    header .icons > * {
-      cursor: pointer;
-    }
-
-    /* Quick links and main navigation styles are now removed */
-
-    .hero {
-      background: #e9ecef;
-      text-align: center;
-      padding: 3em 2em;
-    }
-    .hero .banner {
-      font-size: 1.8em;
-      color: #555;
-      margin-bottom: 0.5em;
-      font-weight: bold;
-    }
-    .featured {
-      padding: 2em;
-      background-color: #fff;
-      border-bottom: 1px solid #ddd;
-    }
-    .featured > div {
-      margin-bottom: 1em;
-    }
-
-    /* Carousel specific styles */
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      margin: 0 auto 1em;
-      overflow: hidden;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-    .carousel-slide {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-    .carousel-slide img {
-      width: 100%;
-      display: block;
-      flex-shrink: 0;
-      object-fit: cover;
-      height: 300px;
-    }
-    .carousel-button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
+      background: linear-gradient(to right, #4b0082, #800080);
       color: white;
-      border: none;
-      padding: 1em 0.8em;
-      cursor: pointer;
-      font-size: 1.5em;
-      z-index: 10;
-    }
-    .carousel-button.prev {
-      left: 10px;
-      border-radius: 0 5px 5px 0;
-    }
-    .carousel-button.next {
-      right: 10px;
-      border-radius: 5px 0 0 5px;
-    }
-
-    .filters {
-      padding: 1.5em 2em;
-      background-color: #f9f9f9;
+      padding: 10px 20px;
       display: flex;
-      gap: 1.5em;
       align-items: center;
+      justify-content: space-between;
       flex-wrap: wrap;
     }
-    .filters select {
-      padding: 0.8em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #fff;
-      flex-grow: 1;
-      min-width: 120px;
+    header .logo {
+      font-size: 24px;
+      font-weight: bold;
     }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2em;
-      padding: 1em 2em;
+    header .search-cart {
+      display: flex;
+      gap: 15px;
+      align-items: center;
     }
-    .product-card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1.5em;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    header input[type="text"] {
+      padding: 5px;
+      border-radius: 4px;
+      border: none;
+    }
+    .hero {
+      background: #f4f4f4;
+      padding: 20px;
+      text-align: center;
+    }
+    .quick-links {
+      margin: 10px 0;
+    }
+    .quick-links a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #800080;
+      font-weight: bold;
+    }
+    .featured-section {
+      padding: 20px;
+    }
+    .section-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .horizontal-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+    }
+    .horizontal-scroll .card {
+      min-width: 150px;
+      background: #eee;
       display: flex;
       flex-direction: column;
       align-items: center;
+      border-radius: 8px;
+      padding: 10px;
       text-align: center;
-      transition: transform 0.2s ease-in-out;
     }
-    .product-card:hover {
-        transform: translateY(-5px);
+    .card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 5px;
     }
-    .product-card img {
-      max-width: 100%;
-      height: 200px;
+    .card strong {
+      font-size: 14px;
+    }
+    .card button {
+      margin-top: 8px;
+      padding: 6px 10px;
+      background-color: #800080;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .brand-logos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+    }
+    .brand-logos img {
+      height: 50px;
+      width: auto;
       object-fit: contain;
-      border-radius: 5px;
-      margin-bottom: 1em;
-    }
-    .product-card h4 {
-      margin-top: 0;
-      margin-bottom: 0.5em;
-      color: #333;
-    }
-    .product-card p {
-      color: #777;
-      margin-bottom: 1em;
-      font-weight: bold;
-    }
-    .product-card p del {
-        color: #999;
-        margin-right: 5px;
-    }
-    .product-card button {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 0.8em 1.5em;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      width: 100%;
-    }
-    .product-card button:hover {
-      background-color: #0056b3;
-    }
-    .pagination {
-      padding: 1.5em 2em;
-      text-align: center;
-      color: #555;
-    }
-    .pagination a, .pagination span {
-      display: inline-block;
-      padding: 0.5em 0.8em;
-      margin: 0 0.3em;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      text-decoration: none;
-      color: #555;
-    }
-    .pagination a:hover {
-      background-color: #eee;
-    }
-    .product-detail {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 2em;
-      margin: 1em 2em;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2em;
-    }
-    .product-detail img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 5px;
-    }
-    .product-detail .info h2 {
-      margin-top: 0;
-      color: #333;
-    }
-    .product-detail .info p {
-      color: #777;
-      margin-bottom: 1em;
-      font-size: 1.2em;
-    }
-    .product-detail .info p strong {
-        font-size: 1.4em;
-        color: #007bff;
-    }
-    .product-detail .info .sizes {
-      display: flex;
-      gap: 0.8em;
-      margin-bottom: 1.5em;
-    }
-    .product-detail .info .sizes > * {
-      padding: 0.5em 1em;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    .product-detail .info .sizes > *:hover {
-        background-color: #f0f0f0;
-    }
-    .product-detail .info .sizes b {
-      border-color: #007bff;
-      color: #007bff;
-      font-weight: bold;
-      background-color: #e6f7ff;
-    }
-    .product-detail .info button {
-      display: block;
-      width: 200px;
-      margin-bottom: 0.8em;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 0.8em 1.5em;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .product-detail .info button:nth-of-type(2) {
-        background-color: #007bff;
-    }
-    .product-detail .info button:nth-of-type(3) {
-        background-color: #6c757d;
-    }
-    .product-detail .info button:hover {
-        opacity: 0.9;
-    }
-
-
-    .tabs {
-      display: flex;
-      background-color: #f9f9f9;
-      padding: 1em 2em;
-      border-bottom: 1px solid #ddd;
-    }
-    .tabs > * {
-      padding: 0.8em 1.5em;
-      margin-right: 1em;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: border-color 0.3s ease;
-    }
-    .tabs > *:hover, .tabs > *.active {
-      border-bottom-color: #007bff;
-    }
-
-    .tab-content {
-        padding: 1em 2em;
-        background-color: #fff;
-        margin: 0 2em 1em;
-        border: 1px solid #ddd;
-        border-top: none;
-        border-radius: 0 0 8px 8px;
-    }
-
-    .tab-content.shipping-returns {
-        font-size: 0.9em;
-        color: #555;
-    }
-
-
-    .checkout {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 2em;
-      margin: 1em 2em;
-    }
-    .checkout h3 {
-      color: #333;
-      margin-bottom: 1em;
-    }
-    .checkout form label {
-      display: block;
-      margin-bottom: 0.5em;
-      font-weight: bold;
-    }
-    .checkout form input {
-      width: 100%;
-      padding: 0.8em;
-      margin-bottom: 1em;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-    .checkout form button {
-      display: block;
-      width: 200px;
-    }
-    .confirmation {
-      background-color: #e6ffe6;
-      color: #2e8b57;
-      border: 1px solid #b8fbbd;
-      border-radius: 8px;
-      padding: 2em;
-      margin: 1em 2em;
-      text-align: center;
-    }
-    .confirmation button, .confirmation a {
-      display: inline-block;
-      margin: 1em 0.5em;
-      padding: 0.8em 1.5em;
-      text-decoration: none;
-      border-radius: 5px;
-    }
-    .confirmation button {
-      background-color: #2e8b57;
-      color: white;
-      border: none;
-    }
-    .confirmation a {
-      background-color: #f0f0f0;
-      color: #333;
-      border: 1px solid #ddd;
-    }
-    .account {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 2em;
-      margin: 1em 2em;
-    }
-    .account .tabs {
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 1.5em;
-    }
-    .account .orders {
-      line-height: 1.8;
     }
     footer {
+      background: #4b0082;
+      color: white;
       text-align: center;
-      padding: 2em;
-      background-color: #1a1a1a;
-      color: #fff;
-      font-size: 0.9em;
+      padding: 15px;
+      margin-top: 30px;
     }
-    /* Small adjustments for mobile view */
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      header .header-left {
-        flex-direction: column; /* Stack site title and search */
-        gap: 10px;
-        align-items: center;
-        margin-bottom: 1em;
-        width: 100%;
-      }
-      header input {
-        width: 100%;
-      }
-      header .icons {
-        justify-content: center;
-        width: 100%;
-      }
-      .filters {
-        flex-direction: column;
-      }
-      .filters select {
-        max-width: 100%;
-      }
-      .product-detail {
-        grid-template-columns: 1fr;
-      }
-      .product-detail .info button {
-        width: 100%;
-      }
-      .product-grid {
-          grid-template-columns: 1fr;
-      }
-      .tabs {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .tabs > * {
-        margin-right: 0.5em;
-        margin-bottom: 0.5em;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="header-left">
-      <a href="#" class="site-title">AskMyShoeke</a>
-      <input type="search" placeholder="Search shoes...">
-    </div>
-    <div class="icons">
-      <span class="account">Login</span>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="banner">New Arrivals | Up to 30% Off</div>
-  </section>
-
-  <section class="featured">
-    <div class="carousel-container">
-      <div class="carousel-slide" id="carouselSlide">
-        <img src="https://i.postimg.cc/xdBXW3Sp/0e6628c244eba991906e52dd0d033bc2.jpg" alt="Trending Shoe 1">
-        <img src="https://i.postimg.cc/dt9TLC8D/c3894285a8b836673c28547e53342623.jpg" alt="Trending Shoe 2">
-        <img src="https://i.postimg.cc/s2MB60bZ/dafd8fa33bba6bab0e609fbd5bbf049b.jpg" alt="Trending Shoe 3">
-        <img src="https://i.postimg.cc/44VcRqy6/edbf19ce276acd554ea79e0c41f19f64.jpg" alt="Trending Shoe 4">
-      </div>
-      <button class="carousel-button prev" onclick="moveSlide(-1)">❮</button>
-      <button class="carousel-button next" onclick="moveSlide(1)">❯</button>
-    </div>
-    <div>Limited Offers - Countdown: 03:24:10</div>
-    <div>Brands: Nike | Adidas | Puma | Converse</div>
-  </section>
-
-  <section class="filters">
-    <select><option>Price Range</option></select>
-    <select><option>Brand</option></select>
-    <select><option>Size</option></select>
-    <select><option>Color</option></select>
-    <select><option>Sort: Best Match</option></select>
-  </section>
-
-  <section class="product-grid">
-    <div class="product-card">
-      <img src="https://via.placeholder.com/200x200/F0F0F0/333333?text=Shoe+A" alt="Nike Air Max">
-      <h4>Nike Air Max</h4>
-      <p>KSh 12,999 ★★★★☆</p>
-      <button>Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/200x200/E0E0E0/333333?text=Shoe+B" alt="Adidas Ultraboost">
-      <h4>Adidas Ultraboost</h4>
-      <p>KSh 14,500 ★★★★★</p>
-      <button>Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/200x200/D0D0D0/333333?text=Shoe+C" alt="Puma RS-X">
-      <h4>Puma RS-X</h4>
-      <p>KSh 9,800 ★★★☆☆</p>
-      <button>Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/200x200/C0C0C0/333333?text=Shoe+D" alt="Converse Chuck Taylor">
-      <h4>Converse Chuck Taylor</h4>
-      <p>KSh 7,500 ★★★★☆</p>
-      <button>Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/200x200/B0B0B0/333333?text=Shoe+E" alt="New Balance 990">
-      <h4>New Balance 990</h4>
-      <p>KSh 18,000 ★★★★★</p>
-      <button>Add to Cart</button>
-    </div>
-    <div class="product-card">
-      <img src="https://via.placeholder.com/200x200/A0A0A0/333333?text=Shoe+F" alt="Vans Old Skool">
-      <h4>Vans Old Skool</h4>
-      <p>KSh 6,200 ★★★☆☆</p>
-      <button>Add to Cart</button>
-    </div>
-  </section>
-
-
-  <div class="pagination">Showing 1–12 of 45 <a href="#">1</a> <span>2</span> <a href="#">3</a> <a href="#">Next →</a></div>
-
-  <section class="product-detail">
-    <img src="shoe-detail.jpg" alt="Nike Air Max 270">
-    <div class="info">
-      <h2>Nike Air Max 270</h2>
-      <p><del>KSh 15,000</del> <strong>KSh 12,999</strong> (-13%)</p>
-      <div class="sizes">38 | 39 | <b>40</b> | 41</div>
-      <button>Add to Cart</button>
-      <button>Buy Now</button>
-      <button>♡ Wishlist</button>
-    </div>
-  </section>
-
-  <div class="tabs">
-      <div class="tab-button active" onclick="showTab('description')">Description</div>
-      <div class="tab-button" onclick="showTab('reviews')">Reviews</div>
-      <div class="tab-button" onclick="showTab('shipping')">Shipping &amp; Returns</div>
-  </div>
-
-  <div id="description" class="tab-content">
-      <p>The Nike Air Max 270 delivers a unique blend of style and comfort. Featuring the largest Air unit in Nike's history, it offers incredible cushioning for all-day wear. The design is inspired by the iconic Air Max 180 and Air Max 93, bringing a modern twist to a classic look. Perfect for casual wear and light activities.</p>
-  </div>
-  <div id="reviews" class="tab-content" style="display:none;">
-      <p><strong>Customer Reviews:</strong></p>
-      <p>★★★★★ - "Super comfortable and stylish!" - Jane D.</p>
-      <p>★★★★☆ - "Great cushioning, perfect for my daily walks." - John S.</p>
-  </div>
-  <div id="shipping" class="tab-content shipping-returns" style="display:none;">
-      <p><strong>Shipping:</strong> Standard delivery within Kenya takes 2-3 business days. Expedited options available at checkout. Free shipping on orders over KSh 10,000.</p>
-      <p><strong>Returns:</strong> You can return unworn items within 14 days of purchase for a full refund or exchange. Please ensure original packaging and tags are intact. Initiate returns via your account's order history.</p>
-  </div>
-
-  <section class="checkout">
-    <h3>Pay via M-Pesa</h3>
-    <form>
-      <label for="phone">M-Pesa Phone Number</label><br>
-      <input type="tel" id="phone" placeholder="+254 7XX XXX XXX"><br>
-      <label for="code">Transaction Code</label><br>
-      <input type="text" id="code" placeholder="e.g. RLF4H8XK"><br>
-
-      <p>Payment Amount: <strong>KSh 13,349</strong></p>
-
-      <label for="receipt">Upload Receipt (optional)</label><br>
-      <input type="file" id="receipt"><br>
-
-      <button type="submit">Confirm Order</button>
-
-    </form>
-  </section>
-
-  <section class="confirmation">
-    ✅ Order #12345 confirmed! ETA: 2-3 business days<br>
-    <button>Track Order</button>
-    <a href="#">Continue Shopping</a>
-  </section>
-
-  <section class="account">
-    <nav class="tabs">Orders | Wishlist | Profile</nav>
-    <div class="orders">
-      <h3>Your Orders</h3>
-      <div>Order #12345 - Processing</div>
-      <div>Order #12344 - Shipped</div>
-    </div>
-  </section>
-
+  </style> 
+ </head> 
+ <body> 
+  <header> 
+   <div class="logo">
+     AskMyShoe 
+   </div> 
+   <div class="search-cart"> 
+    <input type="text" placeholder="Search..."> 
+    <div>
+      🛒 Cart (0) 
+    </div> 
+    <div> <a href="#" style="color:white; text-decoration:none;">Login</a> 
+    </div> 
+   </div> 
+  </header> 
+  <section class="hero"> 
+   <h2>New Arrivals &amp; Discounts</h2> 
+   <p>[Auto-rotating Banner Placeholder]</p> 
+   <div class="quick-links"> <a href="#">Men</a> <a href="#">Women</a> <a href="#">Kids</a> <a href="#">Sports</a> 
+   </div> 
+  </section> 
+  <section class="featured-section"> 
+   <div class="section-title">
+     Trending Now 
+   </div> 
+   <div id="product-list" class="horizontal-scroll"> <!-- Product cards will be inserted here --> 
+   </div> 
+  </section> 
+  <section class="featured-section"> 
+   <div class="section-title">
+     Brand Showcase 
+   </div> 
+   <div class="brand-logos"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Puma_AG.svg" alt="Puma"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Under_armour_logo.svg" alt="Under Armour"> 
+   </div> 
+  </section> 
   <footer>
-    <p>© 2025 AskMyShoeke.com. All rights reserved.</p>
-  </footer>
-
+    © 2025 AskMyShoe. All rights reserved. 
+  </footer> 
   <script>
-    let slideIndex = 0;
-    const slides = document.getElementById('carouselSlide');
-    const totalSlides = slides.children.length;
+    async function fetchAndRenderProducts() {
+      const appId = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
+      const restApiKey = "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3";
+      const url = `https://api.backendless.com/${appId}/${restApiKey}/data/Products`;
 
-    function showSlide(n) {
-      slideIndex = (n + totalSlides) % totalSlides;
-      slides.style.transform = `translateX(${-slideIndex * 100}%)`;
-    }
+      try {
+        const response = await fetch(url);
+        const products = await response.json();
+        const container = document.getElementById("product-list");
 
-    function moveSlide(n) {
-      showSlide(slideIndex + n);
-    }
-
-    // Auto-advance the carousel
-    setInterval(() => {
-      moveSlide(1);
-    }, 5000); // Change slide every 5 seconds
-
-    // Initialize the carousel
-    showSlide(slideIndex);
-
-
-    // Tab functionality for product detail
-    function showTab(tabId) {
-        const tabContents = document.querySelectorAll('.tab-content');
-        tabContents.forEach(content => {
-            content.style.display = 'none';
+        products.forEach(product => {
+          const imageUrl = product.image || "https://via.placeholder.com/150";
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `
+            <img src="${imageUrl}" alt="${product.name}">
+            <strong>${product.name}</strong>
+            <div>KSh ${product.price}</div>
+            <button>Buy Now</button>
+          `;
+          container.appendChild(card);
         });
-
-        const tabButtons = document.querySelectorAll('.tab-button');
-        tabButtons.forEach(button => {
-            button.classList.remove('active');
-        });
-
-        document.getElementById(tabId).style.display = 'block';
-        event.currentTarget.classList.add('active');
+      } catch (err) {
+        console.error("Product loading failed", err);
+      }
     }
-  </script>
 
-</body></html>
-    
+    fetchAndRenderProducts();
+  </script> 
+ </body>
+    </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      
+     
