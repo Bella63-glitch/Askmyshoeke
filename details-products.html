@@ -112,8 +112,7 @@
 
       try {
         // Step 1: Fetch product details
-        // IMPORTANT: Verify the case sensitivity of your "Products" table name in Backendless Console.
-        // If your table is named 'products' (lowercase), change 'Products' below to 'products'.
+        // Your main product table is "Products" (capital P)
         console.log(`DEBUG: Fetching product from 'Products' table with ID: ${productId}`);
         const product = await Backendless.Data.of("Products").findById(productId);
 
@@ -138,35 +137,73 @@
 
         console.log("DEBUG: Product details loaded:", product);
 
-        // Step 2: Fetch images from the separate 'Products-Images' table
-        // IMPORTANT: Verify the case sensitivity of your "Products-Images" table name in Backendless Console.
-        // If your table is named 'products-images' (lowercase), change 'Products-Images' below to 'products-images'.
-        // Also, ensure the column linking to the product ID is correctly named (e.g., 'productId')
+        // Step 2: Fetch images from the 'products-images' table
+        // IMPORTANT CHANGE: Using "products-images" (all lowercase) as per your confirmation
         const query = Backendless.DataQueryBuilder.create().setWhereClause(`productId = '${productId}'`);
-        console.log(`DEBUG: Querying 'Products-Images' table for images linked to productId: ${productId}`);
-        const images = await Backendless.Data.of("Products-Images").find(query);
+        console.log(`DEBUG: Querying 'products-images' table for images linked to productId: ${productId}`);
+        const images = await Backendless.Data.of("products-images").find(query);
 
         const mainImage = document.getElementById("mainImage");
         const thumbnails = document.getElementById("thumbnails");
         thumbnails.innerHTML = ""; // Clear existing placeholder content
 
+        // If product has a direct 'image' URL in the Products table, use that as a fallback or primary image
+        if (product.image && typeof product.image === 'string' && product.image.startsWith('http')) {
+            mainImage.src = product.image;
+            console.log("DEBUG: Using 'image' column from Products table as main image.");
+            // Add this as the first thumbnail if it's not already in the 'images' array from 'products-images'
+            const hasMainImageInThumbnails = images.some(img => img.url === product.image);
+            if (!hasMainImageInThumbnails) {
+                const thumb = document.createElement("img");
+                thumb.src = product.image;
+                thumb.className = "h-20 w-20 object-cover cursor-pointer rounded border-2 border-purple-500"; // Mark as selected
+                thumb.alt = `Main product image for ${product.name}`;
+                thumb.onclick = () => changeImage(thumb);
+                thumbnails.appendChild(thumb);
+            }
+        } else {
+            // Default placeholder if no direct image from Products table
+            mainImage.src = "https://via.placeholder.com/500x500?text=No+Primary+Image";
+        }
+
+
         if (Array.isArray(images) && images.length > 0) {
-          console.log("DEBUG: Images found:", images); 
-          // Set the main image and active thumbnail
-          mainImage.src = images[0].url; // Assumes image URL is in a 'url' column
+          console.log("DEBUG: Images found from 'products-images' table:", images); 
+          // If a direct product.image was used, skip adding it again as a thumbnail
           images.forEach((img, index) => {
-            const thumb = document.createElement("img");
-            thumb.src = img.url; // Assumes image URL is in a 'url' column
-            thumb.className = "h-20 w-20 object-cover cursor-pointer rounded border-2 " + (index === 0 ? "border-purple-500" : "border-transparent");
-            thumb.alt = `Thumbnail ${index + 1} for ${product.name}`; // Add alt text for accessibility
-            thumb.onclick = () => changeImage(thumb);
-            thumbnails.appendChild(thumb);
+            if (img.url && img.url !== mainImage.src) { // Ensure img.url exists and avoid duplicating main image
+              const thumb = document.createElement("img");
+              thumb.src = img.url; // Assumes image URL is in a 'url' column
+              // If product.image was not set, make the first image from 'products-images' the main one and selected
+              const isSelected = (!product.image && index === 0);
+              thumb.className = "h-20 w-20 object-cover cursor-pointer rounded border-2 " + (isSelected ? "border-purple-500" : "border-transparent");
+              thumb.alt = `Thumbnail ${index + 1} for ${product.name}`; // Add alt text for accessibility
+              thumb.onclick = () => changeImage(thumb);
+              thumbnails.appendChild(thumb);
+
+              if (isSelected) {
+                mainImage.src = img.url; // Set the first gallery image as main if no primary image from product
+              }
+            } else if (!product.image && index === 0) { // If no product.image and this is the very first gallery image
+                  // Ensure the first gallery image is selected if it's the main one
+                  const thumb = document.createElement("img");
+                  thumb.src = img.url;
+                  thumb.className = "h-20 w-20 object-cover cursor-pointer rounded border-2 border-purple-500";
+                  thumb.alt = `Thumbnail ${index + 1} for ${product.name}`;
+                  thumb.onclick = () => changeImage(thumb);
+                  thumbnails.appendChild(thumb);
+                  mainImage.src = img.url; // Set as main image
+            }
           });
         } else {
-          console.warn(`DEBUG: No images found for product ID: ${productId}. Displaying placeholder image.`);
-          mainImage.src = "https://via.placeholder.com/500x500?text=No+Image+Available";
-          // Optionally, hide the thumbnails div if there are no images
-          thumbnails.style.display = 'none'; 
+          console.warn(`DEBUG: No additional images found for product ID: ${productId} in 'products-images' table.`);
+          // If no images from 'products-images' and no product.image, display a generic placeholder
+          if (!product.image) {
+              mainImage.src = "https://via.placeholder.com/500x500?text=No+Image+Available";
+          }
+          thumbnails.innerHTML = "<p class='text-gray-500 text-sm'>No additional images.</p>";
+          // You might still want thumbnails div to show the "no additional images" text.
+          // thumbnails.style.display = 'none'; // Uncomment to hide div completely
         }
 
       } catch (err) {
@@ -214,4 +251,32 @@
     };
   </script>
 </body>
-</html/>         
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
