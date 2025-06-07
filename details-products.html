@@ -1,17 +1,371 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Details</title>
-  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100 text-gray-900">
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Product Details</title> 
+  <style>
+    /* SAME CSS — unchanged */
+    body, h1, h2, h3, p, table, th, td, button {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+      background-color: #f3f4f6;
+      color: #1f2937;
+      line-height: 1.5;
+    }
+    header {
+      background-color: #6b21a8;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    header button {
+      background: none;
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    main {
+      max-width: 72rem;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      background: white;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px rgb(0 0 0 / 0.06);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    #mainImage {
+      width: 100%;
+      border-radius: 0.375rem;
+      margin-bottom: 1rem;
+      object-fit: cover;
+    }
+    #thumbnails {
+      display: flex;
+      gap: 0.5rem;
+    }
+    #thumbnails img {
+      width: 5rem;
+      height: 5rem;
+      object-fit: cover;
+      border-radius: 0.375rem;
+      cursor: pointer;
+      border: 2px solid #d1d5db;
+      transition: border-color 0.2s ease;
+    }
+    #thumbnails img.border-purple-500 {
+      border-color: #7c3aed;
+    }
+    #product-name {
+      font-weight: 700;
+      font-size: 1.875rem;
+      margin-bottom: 0.5rem;
+    }
+    #product-price {
+      font-size: 1.25rem;
+      color: #16a34a;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    #product-description {
+      color: #374151;
+      margin-bottom: 1rem;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    @media (min-width: 640px) {
+      .buttons {
+        flex-direction: row;
+      }
+    }
+    .btn-primary {
+      background-color: #6b21a8;
+      color: white;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background-color: #581c87;
+    }
+    .btn-secondary {
+      border: 2px solid #6b21a8;
+      color: #6b21a8;
+      padding: 0.5rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      background: transparent;
+      cursor: pointer;
+    }
+    .btn-secondary:hover {
+      background-color: #f3e8ff;
+    }
+    section {
+      background: white;
+      margin-top: 2rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px rgb(0 0 0 / 0.06);
+      padding: 1.5rem;
+    }
+    section h3 {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    table {
+      width: 100%;
+      border-top: 1px solid #e5e7eb;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th, td {
+      padding: 0.5rem 1rem;
+      vertical-align: top;
+    }
+    th {
+      font-weight: 500;
+      padding-right: 1rem;
+    }
+    tr:not(:last-child) {
+      border-bottom: 1px solid #f9fafb;
+    }
+    .reviews-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .stars-large {
+      color: #fbbf24;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+    .reviews-count {
+      color: #4b5563;
+    }
+    .review {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 1rem;
+    }
+    .review:first-child {
+      border-top: none;
+    }
+    .review p.font-semibold {
+      font-weight: 600;
+    }
+    .review .stars-small {
+      color: #fbbf24;
+      margin: 0.25rem 0;
+    }
+    .review p.text-sm {
+      font-size: 0.875rem;
+      color: #374151;
+    }
+  </style> 
+ </head> 
+ <body> 
+  <header> 
+   <h1>AskMyShoe</h1> 
+   <div class="relative"> 
+     <button>🛒 Cart (<span id="cart-count">0</span>)</button> 
+   </div> 
+  </header> 
+  <main> 
+   <div class="product-grid"> 
+    <div> 
+     <img id="mainImage" src="https://via.placeholder.com/500x500?text=Loading..." alt="Product"> 
+     <div id="thumbnails"></div> 
+    </div> 
+    <div> 
+     <h2 id="product-name">Loading...</h2> 
+     <p id="product-price">KES 0</p> 
+     <p id="product-description">Loading description...</p> 
+     <div class="buttons"> 
+       <button onclick="addToCart()" class="btn-primary">Add to Cart</button> 
+       <button class="btn-secondary">Buy Now</button> 
+     </div> 
+    </div> 
+   </div> 
+   <section> 
+    <h3>Product Details</h3> 
+    <table> 
+     <tbody> 
+      <tr><th>Brand</th><td id="product-brand">Loading...</td></tr> 
+      <tr><th>Material</th><td id="product-material">Mesh &amp; Rubber Sole</td></tr> 
+      <tr><th>SKU</th><td id="product-sku">N/A</td></tr> 
+      <tr><th>Color</th><td id="product-color">N/A</td></tr> 
+     </tbody> 
+    </table> 
+   </section> 
+   <section> 
+    <h3>Customer Reviews</h3> 
+    <div class="reviews-header"> 
+     <div class="stars-large">⭐️⭐️⭐️⭐️⭐️</div> 
+     <span class="reviews-count">4.5 out of 5 (120 reviews)</span> 
+    </div> 
+    <div> 
+     <div class="review"> 
+      <p class="font-semibold">Jane M.</p> 
+      <div class="stars-small">⭐️⭐️⭐️⭐️⭐️</div> 
+      <p class="text-sm">Absolutely love these!</p> 
+     </div> 
+     <div class="review"> 
+      <p class="font-semibold">Mark K.</p> 
+      <div class="stars-small">⭐️⭐️⭐️⭐️</div> 
+      <p class="text-sm">Good value. Could use more arch support though.</p> 
+     </div> 
+    </div> 
+   </section> 
+  </main> 
+  <script src="https://cdn.backendless.com/sdk/js/latest/backendless.min.js" onload="initBackendless()"></script> 
+  <script>
+    function initBackendless() {
+      Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
+      loadProduct();
+    }
 
-  <div class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      
+    function getProductIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("id");
+    }
+
+    async function loadProduct() {
+      const productId = getProductIdFromURL();
+      if (!productId) {
+        document.getElementById("product-name").innerText = "Error: Product ID missing.";
+        document.getElementById("product-description").innerText = "Please ensure the product ID is in the URL (e.g., ?id=YOUR_PRODUCT_ID).";
+        return;
+      }
+
+      try {
+        const product = await Backendless.Data.of("Products").findById(productId);
+        if (!product) {
+          throw new Error("Product not found");
+        }
+
+        document.getElementById("product-name").innerText = product.name || "No name";
+        document.getElementById("product-price").innerText = "KES " + (product.price?.toFixed(2) || "0.00");
+        document.getElementById("product-description").innerText = product.description || "No description.";
+        document.getElementById("product-brand").innerText = product.brand || "Unknown";
+        document.getElementById("product-sku").innerText = product.sku || "N/A";
+        document.getElementById("product-color").innerText = product.color || "N/A";
+
+        // Now fetch images from "products-images" where product.objectId == productId
+        const images = await Backendless.Data.of("products-images").find({
+          where: `product = '${productId}'`
+        });
+
+        const mainImage = document.getElementById("mainImage");
+        const thumbnails = document.getElementById("thumbnails");
+
+        if (images.length > 0) {
+          mainImage.src = images[0].url;
+          thumbnails.innerHTML = "";
+          images.forEach((img, index) => {
+            const thumb = document.createElement("img");
+            thumb.src = img.url;
+            thumb.className = index === 0 ? "border-purple-500" : "";
+            thumb.onclick = () => changeImage(thumb);
+            thumbnails.appendChild(thumb);
+          });
+        } else {
+          mainImage.src = "https://via.placeholder.com/500x500?text=No+Image";
+        }
+      } catch (err) {
+        console.error("Error loading product:", err);
+        document.getElementById("product-name").innerText = "Error loading product.";
+        document.getElementById("product-description").innerText = "An error occurred while fetching product details. Please try again later.";
+        document.getElementById("product-price").innerText = "";
+      }
+    }
+
+    function changeImage(selectedImg) {
+      document.getElementById("mainImage").src = selectedImg.src;
+      Array.from(document.getElementById("thumbnails").children).forEach(img => {
+        img.classList.remove("border-purple-500");
+      });
+      selectedImg.classList.add("border-purple-500");
+    }
+
+    function addToCart() {
+      const productId = getProductIdFromURL();
+      if (!productId) {
+        alert("Cannot add to cart: Product ID is missing.");
+        return;
+      }
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const found = cart.find(item => item.id === productId);
+      if (found) {
+        found.quantity += 1;
+      } else {
+        cart.push({ id: productId, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert("Added to cart!");
+    }
+
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById("cart-count").innerText = count;
+    }
+
+    window.onload = () => {
+      updateCartCount();
+    };
+  </script> 
+ </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!
       <!-- Image Section -->
       <div>
         <img id="mainImage" class="w-full h-auto rounded-lg shadow" src="https://via.placeholder.com/500x500?text=Loading..." alt="Product Image">
@@ -111,125 +465,6 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!
-    #mainImage {
-      width: 100%;
-      border-radius: 0.375rem;
-      margin-bottom: 1rem;
-      object-fit: cover;
-    }
-    #thumbnails {
-      display: flex;
-      background-color: #6b21a8;
-      color: white;
-      padding: 0.5rem 1.5rem;
-      border-radius: 0.375rem;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-    }
-    .btn-primary:hover {
-      background-color: #581c87;
-    }
-    .btn-secondary {
-      border: 2px solid #6b21a8;
-      color: #6b21a8;
-      padding: 0.5rem 1.5rem;
-      border-radius: 0.375rem;
-      font-weight: 600;
-      background: transparent;
-      cursor: pointer;
-    }
-    .btn-secondary:hover {
-      background-color: #f3e8ff;
-    }
-    section {
-      background: white;
-      margin-top: 2rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1), 0 1px 2px rgb(0 0 0 / 0.06);
-      padding: 1.5rem;
-    }
-    section h3 {
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
-    table {
-      width: 100   <h1>AskMyShoe</h1> 
-   <div class="relative">
-    <button>🛒 Cart (<span id="cart-count">0</span>)</button>
-   </div> 
-  </header> 
-  <main> 
-   <div class="product-grid"> 
-    <div> 
-     <img id="mainImage" src="https://via.placeholder.com/500x500?text=Loading..." alt="Product"> 
-     <div id="thumbnails"></div> 
-    </div> 
-    <div> 
-   </section> 
-  </main> 
-  <script src="https://cdn.backendless.com/sdk/js/latest/backendless.min.js" onload="initBackendless()"></script> 
-  <script>
-    function initBackendless() {
-      // Ensure these IDs match your Backendless application IDs
-      Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
-      loadProduct();
-    }
-
-    function getProductIdFromURL() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("id");
-    }
-
-    function loadProduct() {
-      const productId = getProductIdFromURL();
-      if (!productId) {
-        alert("Missing product ID in URL.");
-        // Optionally update the page to show an error message
-        document.getElementById("product-name").innerText = "Error: Product ID missing.";
-        document.getElementById("product-description").innerText = "Please ensure the product ID is in the URL (e.g., ?id=YOUR_PRODUCT_ID).";
-        document.getElementById("product-price").innerText = "";
-        return;
-      }
-
-      // FIX APPLIED HERE: Changed "products" to "Products" (capital P)
-      Backendless.Data.of("Products").findById(productId)
-        .then(product => {
-          if (!product) {
-            console.error("Product not found for ID:", productId);
-            alert("Product not found.");
-    }
-
-    function updateCartCount() {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      let count = cart.reduce((sum, item) => sum + item.quantity, 0);
-      document.getElementById("cart-count").innerText = count;
-    }
-
-    window.onload = () => {
-      updateCartCount();
-    };
-  </script> 
- </body>
-</html>
-
-
 
 
 
