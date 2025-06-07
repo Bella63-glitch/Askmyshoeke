@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details</title>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Product Details</title> 
   <style>
-    /* Styling as-is from your original code */
+    /* SAME CSS — unchanged */
     body, h1, h2, h3, p, table, th, td, button {
       margin: 0;
       padding: 0;
@@ -186,78 +186,62 @@
       font-size: 0.875rem;
       color: #374151;
     }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>AskMyShoe</h1>
-    <div class="relative">
-      <button>🛒 Cart (<span id="cart-count">0</span>)</button>
-    </div>
-  </header>
-  <main>
-    <div class="product-grid">
-      <div>
-        <img id="mainImage" src="https://via.placeholder.com/500x500?text=Loading..." alt="Product">
-        <div id="thumbnails"></div>
-      </div>
-      <div>
-        <h2 id="product-name">Loading...</h2>
-        <p id="product-price">KES 0</p>
-        <p id="product-description">Loading description...</p>
-        <div class="buttons">
-          <button onclick="addToCart()" class="btn-primary">Add to Cart</button>
-          <button class="btn-secondary">Buy Now</button>
-        </div>
-      </div>
-    </div>
+  </style> 
+ </head> 
+ <body> 
+  <header> 
+   <h1>AskMyShoe</h1> 
+   <div class="relative"><button>🛒 Cart (<span id="cart-count">0</span>)</button></div> 
+  </header> 
+  <main> 
+   <div class="product-grid"> 
+    <div> 
+     <img id="mainImage" src="https://via.placeholder.com/500x500?text=Loading..." alt="Product"> 
+     <div id="thumbnails"></div> 
+    </div> 
+    <div> 
+     <h2 id="product-name">Loading...</h2> 
+     <p id="product-price">KES 0</p> 
+     <p id="product-description">Loading description...</p> 
+     <div class="buttons"> 
+      <button onclick="addToCart()" class="btn-primary">Add to Cart</button> 
+      <button class="btn-secondary">Buy Now</button> 
+     </div> 
+    </div> 
+   </div> 
+   <section> 
+    <h3>Product Details</h3> 
+    <table> 
+     <tbody> 
+      <tr><th>Brand</th><td id="product-brand">Loading...</td></tr> 
+      <tr><th>Material</th><td id="product-material">Mesh & Rubber Sole</td></tr> 
+      <tr><th>SKU</th><td id="product-sku">N/A</td></tr> 
+      <tr><th>Color</th><td id="product-color">N/A</td></tr> 
+     </tbody> 
+    </table> 
+   </section> 
+   <section> 
+    <h3>Customer Reviews</h3> 
+    <div class="reviews-header"> 
+     <div class="stars-large">⭐️⭐️⭐️⭐️⭐️</div> 
+     <span class="reviews-count">4.5 out of 5 (120 reviews)</span> 
+    </div> 
+    <div> 
+     <div class="review"> 
+      <p class="font-semibold">Jane M.</p> 
+      <div class="stars-small">⭐️⭐️⭐️⭐️⭐️</div> 
+      <p class="text-sm">Absolutely love these!</p> 
+     </div> 
+     <div class="review"> 
+      <p class="font-semibold">Mark K.</p> 
+      <div class="stars-small">⭐️⭐️⭐️⭐️</div> 
+      <p class="text-sm">Good value. Could use more arch support though.</p> 
+     </div> 
+    </div> 
+   </section> 
+  </main> 
 
-    <section>
-      <h3>Product Details</h3>
-      <table>
-        <tbody>
-          <tr>
-            <th>Brand</th>
-            <td id="product-brand">Loading...</td>
-          </tr>
-          <tr>
-            <th>Material</th>
-            <td id="product-material">Mesh & Rubber Sole</td>
-          </tr>
-          <tr>
-            <th>SKU</th>
-            <td id="product-sku">N/A</td>
-          </tr>
-          <tr>
-            <th>Color</th>
-            <td id="product-color">N/A</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section>
-      <h3>Customer Reviews</h3>
-      <div class="reviews-header">
-        <div class="stars-large">⭐️⭐️⭐️⭐️⭐️</div>
-        <span class="reviews-count">4.5 out of 5 (120 reviews)</span>
-      </div>
-      <div>
-        <div class="review">
-          <p class="font-semibold">Jane M.</p>
-          <div class="stars-small">⭐️⭐️⭐️⭐️⭐️</div>
-          <p class="text-sm">Absolutely love these!</p>
-        </div>
-        <div class="review">
-          <p class="font-semibold">Mark K.</p>
-          <div class="stars-small">⭐️⭐️⭐️⭐️</div>
-          <p class="text-sm">Good value. Could use more arch support though.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script src="https://cdn.backendless.com/sdk/js/latest/backendless.min.js" onload="initBackendless()"></script>
+  <script src="https://cdn.backendless.com/sdk/js/latest/backendless.min.js" onload="initBackendless()"></script> 
   <script>
     function initBackendless() {
       Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
@@ -271,7 +255,6 @@
 
     function loadProduct() {
       const productId = getProductIdFromURL();
-
       if (!productId) {
         alert("Missing product ID in URL.");
         return;
@@ -285,7 +268,7 @@
           }
 
           document.getElementById("product-name").innerText = product.name || "No name";
-          document.getElementById("product-price").innerText = "KES " + (product.price ? product.price.toFixed(2) : "0.00");
+          document.getElementById("product-price").innerText = "KES " + (product.price?.toFixed(2) || "0.00");
           document.getElementById("product-description").innerText = product.description || "No description.";
           document.getElementById("product-brand").innerText = product.brand || "Unknown";
           document.getElementById("product-sku").innerText = product.sku || "N/A";
@@ -295,12 +278,10 @@
           const thumbnails = document.getElementById("thumbnails");
 
           let images = product.images;
-
-          // Parse if it's a JSON string
           if (typeof images === "string") {
             try {
               images = JSON.parse(images);
-            } catch (e) {
+            } catch {
               images = [];
             }
           }
@@ -308,40 +289,86 @@
           if (Array.isArray(images) && images.length > 0) {
             mainImage.src = images[0];
             thumbnails.innerHTML = "";
-            images.forEach((img, i) => {
-              const imgEl = document.createElement("img");
-              imgEl.src = img;
-              imgEl.className = i === 0 ? "border-purple-500" : "";
-              imgEl.onclick = () => changeImage(imgEl);
-              thumbnails.appendChild(imgEl);
+            images.forEach((img, index) => {
+              const thumb = document.createElement("img");
+              thumb.src = img;
+              thumb.className = index === 0 ? "border-purple-500" : "";
+              thumb.onclick = () => changeImage(thumb);
+              thumbnails.appendChild(thumb);
             });
           } else {
             mainImage.src = "https://via.placeholder.com/500x500?text=No+Image";
             thumbnails.innerHTML = "";
           }
         })
-        .catch(error => {
-          console.error("Error fetching product:", error);
-          alert("Failed to load product details.");
+        .catch(err => {
+          console.error("Error loading product:", err);
+          alert("Failed to load product. Check console for details.");
         });
     }
 
     function changeImage(selectedImg) {
-      const mainImage = document.getElementById("mainImage");
-      mainImage.src = selectedImg.src;
-
-      const thumbnails = document.getElementById("thumbnails").children;
-      for (let img of thumbnails) {
+      document.getElementById("mainImage").src = selectedImg.src;
+      Array.from(document.getElementById("thumbnails").children).forEach(img => {
         img.classList.remove("border-purple-500");
-      }
-
+      });
       selectedImg.classList.add("border-purple-500");
     }
 
     function addToCart() {
       const productId = getProductIdFromURL();
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const found = cart.find(item => item.id === productId);
+      if (found) {
+        found.quantity += 1;
+      } else {
+        cart.push({ id: productId, quantity: 1 });
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      alert("Added to cart!");
+    }
 
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById("cart-count").innerText = count;
+    }
+
+    window.onload = () => {
+      updateCartCount();
+    };
+  </script> 
+ </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!
+      background-color: #6b21a8;
+      color: white;
+      padding: 1rem;
+      
+    function initBackendless() {
+      
       let found = cart.find(item => item.id === productId);
       if (found) {
         found.quantity += 1;
