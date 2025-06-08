@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en"> 
  <head> 
   <meta charset="UTF-8"> 
@@ -8,30 +7,21 @@
   <script src="https://cdn.jsdelivr.net/npm/backendless@7.0.4/dist/backendless.min.js"></script> 
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
  </head> 
- <body class="bg-gray-100 text-gray-800"> 
-  <!-- Header --> 
-  <header class="bg-gradient-to-r from-purple-800 to-purple-900 text-white p-4 shadow-md"> 
+ <body class="bg-gray-100 text-gray-800"> <!-- Header --> 
+  <header style="background: linear-gradient(to right, #4B0082, #2E003E);" class="text-white p-4 shadow-md"> 
    <div class="container mx-auto flex flex-wrap items-center justify-between"> 
     <h1 class="text-2xl font-bold">AskMyShoe</h1> 
     <div class="flex space-x-4 text-sm"> 
-     <input type="text" id="searchInput" placeholder="Search shoes..." class="rounded px-2 py-1 text-black"> 
-     <a href="cart.html" class="relative">Cart <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">0</span></a> 
+     <input type="text" id="searchInput" placeholder="Search shoes..." class="rounded px-2 py-1 text-black"> <a href="cart.html" class="relative">Cart <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">0</span> </a> 
     </div> 
    </div> 
-  </header>   <!-- Filters -->   <div class="bg-white shadow sticky top-0 z-10 p-3 border-b flex flex-wrap gap-3 justify-between items-center"> 
-   <select id="filter-brand" class="border p-2 rounded text-sm"> <option value="">All Brands</option> </select> 
-   <select id="filter-size" class="border p-2 rounded text-sm"> <option value="">All Sizes</option> </select> 
-   <select id="filter-color" class="border p-2 rounded text-sm"> <option value="">All Colors</option> </select> 
-   <select id="filter-price" class="border p-2 rounded text-sm"> 
-    <option value="">All Prices</option> 
-    <option value="0-5000">Under KSh 5,000</option> 
-    <option value="5001-10000">KSh 5,001 - 10,000</option> 
-    <option value="10001-20000">KSh 10,001 - 20,000</option> 
-    <option value="20001">Over KSh 20,000</option> 
-   </select> 
-  </div>   <!-- Products Grid -->   <main class="p-4 container mx-auto"> 
+  </header> <!-- Filters --> 
+  <div class="bg-white shadow sticky top-0 z-10 p-3 border-b flex flex-wrap gap-3 justify-between items-center"> <select id="filter-brand" class="border p-2 rounded text-sm"> <option value="">All Brands</option> </select> <select id="filter-size" class="border p-2 rounded text-sm"> <option value="">All Sizes</option> </select> <select id="filter-color" class="border p-2 rounded text-sm"> <option value="">All Colors</option> </select> <select id="filter-price" class="border p-2 rounded text-sm"> <option value="">All Prices</option> <option value="0-5000">Under KSh 5,000</option> <option value="5001-10000">KSh 5,001 - 10,000</option> <option value="10001-20000">KSh 10,001 - 20,000</option> <option value="20001">Over KSh 20,000</option> </select> 
+  </div> <!-- Products Grid --> 
+  <main class="p-4 container mx-auto"> 
    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div> 
-  </main>   <script>
+  </main> 
+  <script>
   Backendless.initApp('0889EC61-CC4A-4B8E-BD71-C27140B34E26', '9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3');
 
   let allProducts = [];
@@ -157,5 +147,39 @@
 
   loadProducts();
   updateCartCount();
-  </script>  </body>
+</script> 
+ </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
