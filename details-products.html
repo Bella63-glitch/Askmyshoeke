@@ -8,23 +8,36 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
+      margin: 0;
       background: #f9f9f9;
     }
+
+    header {
+      background: linear-gradient(to right, #4b0082, #800080);
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 1.8em;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
     #product-container {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
       max-width: 1000px;
-      margin: auto;
+      margin: 30px auto;
       background: white;
       padding: 20px;
       border-radius: 10px;
     }
+
     .image-gallery {
       flex: 1;
       min-width: 300px;
     }
+
     .main-image {
       width: 100%;
       max-height: 400px;
@@ -32,11 +45,13 @@
       border: 1px solid #ddd;
       border-radius: 10px;
     }
+
     .thumbnails {
       display: flex;
       gap: 10px;
       margin-top: 10px;
     }
+
     .thumbnails img {
       width: 60px;
       height: 60px;
@@ -45,34 +60,42 @@
       border: 2px solid transparent;
       border-radius: 5px;
     }
+
     .thumbnails img.active {
       border-color: orange;
     }
+
     .details {
       flex: 1;
       min-width: 300px;
     }
+
     .details h1 {
       margin-bottom: 10px;
     }
+
     .price {
       font-size: 1.2em;
       margin-bottom: 15px;
     }
+
     .price .current {
       color: green;
       font-weight: bold;
       margin-right: 10px;
     }
+
     .price .original {
       text-decoration: line-through;
       color: #999;
       margin-right: 10px;
     }
+
     .price .discount {
       color: red;
       font-weight: bold;
     }
+
     .sizes span {
       display: inline-block;
       padding: 6px 12px;
@@ -81,39 +104,43 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .actions {
       margin-top: 15px;
     }
-    .actions button {
-      margin: 5px 5px 5px 0;
+
+    .actions a {
+      display: inline-block;
+      margin: 5px 10px 5px 0;
       padding: 10px 20px;
       font-size: 1em;
-      border: none;
+      text-decoration: none;
       border-radius: 5px;
-      cursor: pointer;
     }
+
     .add-cart {
       background: orange;
       color: white;
     }
+
     .buy-now {
       background: green;
       color: white;
     }
-    .wishlist {
-      background: transparent;
-      border: 1px solid #ccc;
-    }
+
     .tab {
       margin-top: 25px;
     }
+
     .tab h3 {
       margin-bottom: 10px;
     }
+
     .error {
       color: red;
       font-weight: bold;
     }
+
     @media (max-width: 768px) {
       #product-container {
         flex-direction: column;
@@ -122,9 +149,12 @@
   </style> 
  </head> 
  <body> 
+  <header>Ask My Shoe</header>
+
   <div id="product-container">
    Loading product...
   </div> 
+
   <script>
     const APP_ID = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
     const API_KEY = "63AB1DF8-175A-48B6-8F9C-EE24F2E58F21";
@@ -152,13 +182,14 @@
     function renderProduct(product) {
       const container = document.getElementById("product-container");
 
-      // Convert image and galleryImages to full URLs
       const gallery = product.galleryImages || [];
       const images = gallery.length > 0 ? gallery.map(ensureImageURL) : [ensureImageURL(product.image)];
 
       const currentPrice = parseFloat(product.price);
       const originalPrice = parseFloat(product.originalPrice || currentPrice);
       const discount = calculateDiscount(originalPrice, currentPrice);
+
+      const productId = product.objectId;
 
       container.innerHTML = `
         <div class="image-gallery">
@@ -185,9 +216,8 @@
             `).join('')}
           </div>
           <div class="actions">
-            <button class="add-cart">Add to Cart</button>
-            <button class="buy-now">Buy Now</button>
-            <button class="wishlist">♡ Wishlist</button>
+            <a href="cart.html?id=${productId}" class="add-cart">🛒 Add to Cart</a>
+            <a href="checkout.html?id=${productId}" class="buy-now">Buy Now</a>
           </div>
           <div class="tab">
             <h3>Description</h3>
@@ -229,6 +259,3 @@
   </script> 
  </body>
 </html>
-
-
-
