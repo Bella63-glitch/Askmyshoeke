@@ -1,104 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Product Details</title>
-  <script type="module">
-    import Backendless from 'https://cdn.jsdelivr.net/npm/backendless@7.2.8/+esm';
-
-    const APP_ID = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
-    const API_KEY = "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3";
-    const TABLE_NAME = "Products";
-
-    Backendless.initApp(APP_ID, API_KEY);
-
-    const container = document.getElementById("product-container");
-
-    function getProductIdFromURL() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("id");
-    }
-
-    function calculateDiscount(original, current) {
-      if (!original || original <= current) return '';
-      const discount = ((original - current) / original) * 100;
-      return `-${Math.round(discount)}%`;
-    }
-
-    function renderProduct(product) {
-      const images = product.galleryImages || [product.imageUrl];
-      const currentPrice = parseFloat(product.price);
-      const originalPrice = parseFloat(product.originalPrice || currentPrice);
-      const discount = calculateDiscount(originalPrice, currentPrice);
-
-      container.innerHTML = `
-        <div class="image-gallery">
-          <img id="main-image" class="main-image" src="${images[0]}" alt="Product Image">
-          <div class="thumbnails">
-            ${images.map((img, i) => `
-              <img src="${img}" class="${i === 0 ? 'active' : ''}" data-index="${i}">
-            `).join('')}
-          </div>
-        </div>
-        <div class="details">
-          <h1>${product.name}</h1>
-          <div class="price">
-            <span class="current">KSh ${currentPrice.toLocaleString()}</span>
-            ${originalPrice > currentPrice ? `
-              <span class="original">KSh ${originalPrice.toLocaleString()}</span>
-              <span class="discount">${discount}</span>` : ''
-            }
-          </div>
-          <div class="sizes">
-            <strong>Sizes:</strong><br>
-            ${(product.sizes || ['38','39','40','41']).map(size => `
-              <span>${size}</span>
-            `).join('')}
-          </div>
-          <div class="actions">
-            <button class="add-cart">Add to Cart</button>
-            <button class="buy-now">Buy Now</button>
-            <button class="wishlist">♡ Wishlist</button>
-          </div>
-          <div class="tab">
-            <h3>Description</h3>
-            <p>${product.description || "No description provided."}</p>
-          </div>
-          <div class="tab">
-            <h3>Reviews</h3>
-            <p>No reviews yet. Be the first to review this product.</p>
-          </div>
-        </div>
-      `;
-
-      document.querySelectorAll('.thumbnails img').forEach(img => {
-        img.addEventListener('click', () => {
-          document.getElementById('main-image').src = img.src;
-          document.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
-          img.classList.add('active');
-        });
-      });
-    }
-
-    async function loadProduct() {
-      const id = getProductIdFromURL();
-      if (!id) {
-        container.innerHTML = '<div class="error">No product ID found.</div>';
-        return;
-      }
-
-      try {
-        const product = await Backendless.Data.of(TABLE_NAME).findById(id);
-        renderProduct(product);
-      } catch (error) {
-        console.error(error);
-        container.innerHTML = '<div class="error">Error loading product.</div>';
-      }
-    }
-
-    loadProduct();
-  </script>
+  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -208,7 +114,6 @@
       color: red;
       font-weight: bold;
     }
-
     @media (max-width: 768px) {
       #product-container {
         flex-direction: column;
@@ -218,6 +123,104 @@
 </head>
 <body>
   <div id="product-container">Loading product...</div>
+
+  <script>
+    const APP_ID = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
+    const API_KEY = "63AB1DF8-175A-48B6-8F9C-EE24F2E58F21"; // Correct JS (browser) key
+    const TABLE_NAME = "Products";
+
+    Backendless.initApp(APP_ID, API_KEY);
+
+    function getProductIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("id");
+    }
+
+    function calculateDiscount(original, current) {
+      if (!original || original <= current) return '';
+      const discount = ((original - current) / original) * 100;
+      return `-${Math.round(discount)}%`;
+    }
+
+    function renderProduct(product) {
+      const container = document.getElementById("product-container");
+
+      const images = product.galleryImages || [product.imageUrl || "https://via.placeholder.com/400"];
+      const currentPrice = parseFloat(product.price);
+      const originalPrice = parseFloat(product.originalPrice || currentPrice);
+      const discount = calculateDiscount(originalPrice, currentPrice);
+
+      container.innerHTML = `
+        <div class="image-gallery">
+          <img id="main-image" class="main-image" src="${images[0]}" alt="Product Image">
+          <div class="thumbnails">
+            ${images.map((img, i) => `
+              <img src="${img}" class="${i === 0 ? 'active' : ''}" data-index="${i}">
+            `).join('')}
+          </div>
+        </div>
+        <div class="details">
+          <h1>${product.name}</h1>
+          <div class="price">
+            <span class="current">KSh ${currentPrice.toLocaleString()}</span>
+            ${originalPrice > currentPrice ? `
+              <span class="original">KSh ${originalPrice.toLocaleString()}</span>
+              <span class="discount">${discount}</span>` : ''
+            }
+          </div>
+          <div class="sizes">
+            <strong>Sizes:</strong><br>
+            ${(product.sizes || ['38','39','40','41']).map(size => `
+              <span>${size}</span>
+            `).join('')}
+          </div>
+          <div class="actions">
+            <button class="add-cart">Add to Cart</button>
+            <button class="buy-now">Buy Now</button>
+            <button class="wishlist">♡ Wishlist</button>
+          </div>
+          <div class="tab">
+            <h3>Description</h3>
+            <p>${product.description || "No description provided."}</p>
+          </div>
+          <div class="tab">
+            <h3>Reviews</h3>
+            <p>No reviews yet.</p>
+          </div>
+        </div>
+      `;
+
+      document.querySelectorAll('.thumbnails img').forEach(img => {
+        img.addEventListener('click', () => {
+          document.getElementById('main-image').src = img.src;
+          document.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
+          img.classList.add('active');
+        });
+      });
+    }
+
+    async function loadProduct() {
+      const id = getProductIdFromURL();
+      if (!id) {
+        document.getElementById("product-container").innerHTML = '<div class="error">No product ID found in URL.</div>';
+        return;
+      }
+
+      try {
+        const product = await Backendless.Data.of(TABLE_NAME).findById(id);
+        renderProduct(product);
+      } catch (error) {
+        console.error(error);
+        document.getElementById("product-container").innerHTML = '<div class="error">Error loading product. Please check console.</div>';
+      }
+    }
+
+    loadProduct();
+  </script>
 </body>
 </html>
+
+
+
+
 
