@@ -1,34 +1,42 @@
-<!doctype html>
-<html lang="en"> 
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1"> 
-  <title>Your Cart</title> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Cart</title>
   <style>
     body {
       background-color: #f3f4f6;
       color: #1f2937;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-      margin: 0; padding: 0;
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
     }
     header {
-      background: linear-gradient(to right, #4c1d95, #7c3aed);
+      background: linear-gradient(to right, #2e1065, #4c1d95);
       color: white;
-      box-shadow: 0 2px 4px rgb(0 0 0 / 0.1);
       padding: 1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     header h1 {
-      font-weight: 700;
       font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
     }
-    header nav a {
+    header .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header button {
+      background: transparent;
+      border: 1px solid white;
       color: white;
-      font-weight: 600;
-      text-decoration: none;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.375rem;
+      cursor: pointer;
     }
     main {
       max-width: 640px;
@@ -36,8 +44,8 @@
       padding: 0 1rem;
     }
     main h2 {
-      font-weight: 700;
       font-size: 1.5rem;
+      font-weight: 700;
       margin-bottom: 1.5rem;
     }
     #cart-items > div {
@@ -47,13 +55,8 @@
       align-items: center;
       padding: 1rem;
       border-radius: 0.5rem;
-      box-shadow: 0 1px 3px rgb(0 0 0 / 0.1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       margin-bottom: 1.5rem;
-    }
-    #cart-items > div .item-info {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
     }
     #cart-items img {
       width: 80px;
@@ -61,29 +64,16 @@
       object-fit: cover;
       border-radius: 0.5rem;
     }
-    #cart-items h4 {
-      margin: 0;
-      font-weight: 700;
-    }
-    #cart-items p {
-      margin: 0.25rem 0 0;
-      color: #4b5563;
-      font-size: 0.875rem;
-    }
-    #cart-items > div .item-total p {
-      font-weight: 600;
-      margin: 0;
+    .item-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
     .cart-footer {
       margin-top: 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-    }
-    .cart-footer h3 {
-      font-weight: 700;
-      font-size: 1.25rem;
-      margin: 0;
     }
     .checkout-btn {
       background-color: #6b21a8;
@@ -94,90 +84,189 @@
       cursor: pointer;
       font-weight: 600;
       font-size: 1rem;
-      transition: background-color 0.3s ease;
     }
-    .checkout-btn:hover {
-      background-color: #581c87;
+    .auth-box input {
+      display: block;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      width: 100%;
     }
-  </style> 
- </head> 
- <body> <!-- Header --> 
-  <header> 
-   <h1>ShoeStore</h1> 
-   <nav>
-    <a href="#">Continue Shopping</a>
-   </nav> 
-  </header> <!-- Cart Content --> 
-  <main> 
-   <h2>Shopping Cart</h2> 
-   <div id="cart-items"> <!-- Cart items will be injected here --> 
-   </div> 
-   <div class="cart-footer"> 
-    <h3>Total: KES <span id="cart-total">0</span></h3> <button class="checkout-btn">Checkout</button> 
-   </div> 
-  </main> <!-- Backendless SDK --> 
-  <script src="https://cdn.backendless.com/sdk/js/latest/backendless.min.js" onload="initBackendless()"></script> 
-  <script>
-    function initBackendless() {
-      Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
+    .auth-box button {
+      margin-top: 0.5rem;
+      width: 100%;
+      padding: 0.5rem;
+      font-weight: bold;
+      background-color: #4c1d95;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>ShoeStore</h1>
+  <div class="user-info" id="user-info" style="display: none;">
+    <span id="greeting">Hi</span>
+    <button id="logout-btn">Logout</button>
+  </div>
+</header>
+<main>
+  <h2>Shopping Cart</h2>
+  <div id="auth-box" class="auth-box">
+    <h3>Register</h3>
+    <input id="reg-name" placeholder="Name">
+    <input id="reg-email" type="email" placeholder="Email">
+    <input id="reg-password" type="password" placeholder="Password">
+    <button id="register-btn">Register</button>
+    <h3>Login</h3>
+    <input id="login-email" type="email" placeholder="Email">
+    <input id="login-password" type="password" placeholder="Password">
+    <button id="login-btn">Login</button>
+  </div>
+  <div id="cart-items" style="display: none;"></div>
+  <div class="cart-footer" id="cart-footer" style="display: none;">
+    <h3>Total: KES <span id="cart-total">0</span></h3>
+    <button class="checkout-btn">Checkout</button>
+  </div>
+</main>
+
+<!-- ✅ Use updated script version -->
+<script src="https://cdn.jsdelivr.net/npm/backendless@7.2.5/dist/backendless.min.js"></script>
+
+<script>
+  Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
+
+  async function registerUser() {
+    const name = document.getElementById("reg-name").value.trim();
+    const email = document.getElementById("reg-email").value.trim();
+    const password = document.getElementById("reg-password").value;
+
+    if (!name || !email || !password) {
+      alert("Please fill in all registration fields.");
+      return;
+    }
+
+    const user = new Backendless.User();
+    user.name = name;
+    user.email = email;
+    user.password = password;
+
+    try {
+      await Backendless.UserService.register(user);
+      alert("Registration successful! Please log in.");
+      document.getElementById("reg-name").value = '';
+      document.getElementById("reg-email").value = '';
+      document.getElementById("reg-password").value = '';
+    } catch (e) {
+      alert("Registration failed: " + e.message);
+    }
+  }
+
+  async function loginUser() {
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
+
+    try {
+      const user = await Backendless.UserService.login(email, password, true);
+      showUserInfo(user);
+      document.getElementById("auth-box").style.display = "none";
       loadCart();
+    } catch (e) {
+      alert("Login failed: " + e.message);
     }
+  }
 
-    async function loadCart() {
-      const cartItemsEl = document.getElementById('cart-items');
-      const cartTotalEl = document.getElementById('cart-total');
-      cartItemsEl.innerHTML = '';
-      
-      try {
-        // Fetch cart items from Backendless (assuming a 'cart' table for current user)
-        // Adjust query as needed for your data schema
-        const currentUser = await Backendless.UserService.getCurrentUser();
-        if (!currentUser) {
-          cartItemsEl.innerHTML = '<p>Please login to view your cart.</p>';
-          cartTotalEl.textContent = '0';
-          return;
-        }
-        
-        const whereClause = `ownerId = '${currentUser.objectId}'`; // example field 'ownerId'
-        const queryBuilder = Backendless.DataQueryBuilder.create().setWhereClause(whereClause);
-        const cartItems = await Backendless.Data.of('cart').find(queryBuilder);
+  async function logoutUser() {
+    try {
+      await Backendless.UserService.logout();
+      location.reload();
+    } catch (e) {
+      alert("Logout failed: " + e.message);
+    }
+  }
 
-        if (!cartItems || cartItems.length === 0) {
-          cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
-          cartTotalEl.textContent = '0';
-          return;
-        }
+  async function loadCart() {
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartFooterEl = document.getElementById('cart-footer');
+    const cartTotalEl = document.getElementById('cart-total');
 
-        let total = 0;
+    cartItemsEl.innerHTML = '';
+    cartItemsEl.style.display = "block";
+    cartFooterEl.style.display = "flex";
 
-        cartItems.forEach(item => {
-          const subtotal = item.price * item.qty;
-          total += subtotal;
+    try {
+      const currentUser = await Backendless.UserService.getCurrentUser();
+      if (!currentUser) {
+        cartItemsEl.innerHTML = '<p>Please log in to view your cart.</p>';
+        cartTotalEl.textContent = '0';
+        cartFooterEl.style.display = "none";
+        return;
+      }
 
-          cartItemsEl.innerHTML += `
-            <div>
-              <div class="item-info">
-                <img src="${item.image}" alt="${item.name}" />
-                <div>
-                  <h4>${item.name}</h4>
-                  <p>KES ${item.price.toLocaleString()} x ${item.qty}</p>
-                </div>
-              </div>
-              <div class="item-total">
-                <p>KES ${subtotal.toLocaleString()}</p>
+      const query = Backendless.DataQueryBuilder.create().setWhereClause(`ownerId = '${currentUser.objectId}'`);
+      const cartItems = await Backendless.Data.of('cart').find(query);
+
+      if (cartItems.length === 0) {
+        cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
+        cartTotalEl.textContent = '0';
+        return;
+      }
+
+      let total = 0;
+      cartItems.forEach(item => {
+        const subtotal = item.price * item.qty;
+        total += subtotal;
+
+        cartItemsEl.innerHTML += `
+          <div>
+            <div class="item-info">
+              <img src="${item.image}" alt="${item.name}" />
+              <div>
+                <h4>${item.name}</h4>
+                <p>KES ${item.price.toLocaleString()} x ${item.qty}</p>
               </div>
             </div>
-          `;
-        });
+            <div class="item-total">
+              <p>KES ${subtotal.toLocaleString()}</p>
+            </div>
+          </div>
+        `;
+      });
 
-        cartTotalEl.textContent = total.toLocaleString();
-
-      } catch (error) {
-        console.error('Error loading cart:', error);
-        cartItemsEl.innerHTML = '<p>Failed to load cart items.</p>';
-        cartTotalEl.textContent = '0';
-      }
+      cartTotalEl.textContent = total.toLocaleString();
+    } catch (error) {
+      cartItemsEl.innerHTML = '<p>Failed to load cart items. Please try again later.</p>';
+      cartTotalEl.textContent = '0';
     }
-  </script> 
- 
-</body></html>
+  }
+
+  function showUserInfo(user) {
+    const name = user.name || user.email;
+    document.getElementById("greeting").textContent = `Hi, ${name}`;
+    document.getElementById("user-info").style.display = "flex";
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("register-btn").addEventListener("click", registerUser);
+    document.getElementById("login-btn").addEventListener("click", loginUser);
+    document.getElementById("logout-btn").addEventListener("click", logoutUser);
+
+    Backendless.UserService.getCurrentUser().then(user => {
+      if (user) {
+        document.getElementById("auth-box").style.display = "none";
+        showUserInfo(user);
+        loadCart();
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+
