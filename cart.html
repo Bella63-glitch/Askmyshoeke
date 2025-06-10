@@ -127,7 +127,7 @@
     <div id="cart-items" style="display: none;"></div> 
     <div class="cart-footer" id="cart-footer" style="display: none;"> 
       <h3>Total: KES <span id="cart-total">0</span></h3> 
-      <button class="checkout-btn" onclick="window.location.href='checkout.html'">Checkout</button> 
+      <button class="checkout-btn" onclick="location.href='checkout.html'">Checkout</button> 
     </div> 
   </main> 
 
@@ -139,10 +139,7 @@
       const name = document.getElementById("reg-name").value.trim();
       const email = document.getElementById("reg-email").value.trim();
       const password = document.getElementById("reg-password").value;
-      if (!name || !email || !password) {
-        alert("Please fill in all registration fields.");
-        return;
-      }
+      if (!name || !email || !password) return alert("Please fill in all fields.");
       const user = new Backendless.User();
       user.name = name;
       user.email = email;
@@ -150,9 +147,6 @@
       try {
         await Backendless.UserService.register(user);
         alert("Registration successful! Please log in.");
-        document.getElementById("reg-name").value = '';
-        document.getElementById("reg-email").value = '';
-        document.getElementById("reg-password").value = '';
       } catch (e) {
         alert("Registration failed: " + e.message);
       }
@@ -161,10 +155,7 @@
     async function loginUser() {
       const email = document.getElementById("login-email").value.trim();
       const password = document.getElementById("login-password").value;
-      if (!email || !password) {
-        alert("Please enter both email and password.");
-        return;
-      }
+      if (!email || !password) return alert("Please enter both email and password.");
       try {
         const user = await Backendless.UserService.login(email, password, true);
         showUserInfo(user);
@@ -176,18 +167,15 @@
     }
 
     async function logoutUser() {
-      try {
-        await Backendless.UserService.logout();
-        location.reload();
-      } catch (e) {
-        alert("Logout failed: " + e.message);
-      }
+      await Backendless.UserService.logout();
+      location.reload();
     }
 
     async function loadCart() {
       const cartItemsEl = document.getElementById('cart-items');
       const cartFooterEl = document.getElementById('cart-footer');
       const cartTotalEl = document.getElementById('cart-total');
+
       cartItemsEl.innerHTML = '';
       cartItemsEl.style.display = "block";
       cartFooterEl.style.display = "flex";
@@ -202,50 +190,51 @@
         }
 
         const query = Backendless.DataQueryBuilder.create().setWhereClause(`ownerId = '${currentUser.objectId}'`);
-        const cartItems = await Backendless.Data.of('Cart').find(query);
+        const items = await Backendless.Data.of('Cart').find(query);
 
-        if (cartItems.length === 0) {
+        if (!items.length) {
           cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
           cartTotalEl.textContent = '0';
           return;
         }
 
         let total = 0;
-        cartItems.forEach(item => {
+
+        items.forEach(item => {
+          const name = item.productname || "Unnamed Product";
           const qty = item.quantity || 1;
           const price = item.price || 0;
           const subtotal = price * qty;
           total += subtotal;
-
-          const imageUrl = `https://backendlessappcontent.com/0889EC61-CC4A-4B8E-BD71-C27140B34E26/AskMyShoe/products-images/${item.productimage}`;
+          const imageUrl = `https://backendlessappcontent.com/0889EC61-CC4A-4B8E-BD71-C27140B34E26/products-images/${item.productimage}`;
 
           cartItemsEl.innerHTML += `
             <div>
               <div class="item-info">
-                <img src="${imageUrl}" alt="${item.productname}" />
+                <img src="${imageUrl}" alt="${name}" onerror="this.src='fallback.jpg'">
                 <div>
-                  <h4>${item.productname}</h4>
+                  <h4>${name}</h4>
                   <p>KES ${price.toLocaleString()} x ${qty}</p>
                 </div>
               </div>
-              <div class="item-total">
-                <p>KES ${subtotal.toLocaleString()}</p>
+              <div>
+                <p><strong>KES ${subtotal.toLocaleString()}</strong></p>
               </div>
             </div>
           `;
         });
 
         cartTotalEl.textContent = total.toLocaleString();
+
       } catch (error) {
-        console.error(error);
-        cartItemsEl.innerHTML = '<p>Failed to load cart items. Please try again later.</p>';
+        cartItemsEl.innerHTML = '<p>Failed to load cart items.</p>';
+        cartFooterEl.style.display = "none";
         cartTotalEl.textContent = '0';
       }
     }
 
     function showUserInfo(user) {
-      const name = user.name || user.email;
-      document.getElementById("greeting").textContent = `Hi, ${name}`;
+      document.getElementById("greeting").textContent = `Hi, ${user.name || user.email}`;
       document.getElementById("user-info").style.display = "flex";
     }
 
@@ -265,27 +254,6 @@
   </script> 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
