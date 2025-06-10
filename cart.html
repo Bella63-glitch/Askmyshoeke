@@ -127,7 +127,7 @@
     <div id="cart-items" style="display: none;"></div> 
     <div class="cart-footer" id="cart-footer" style="display: none;"> 
       <h3>Total: KES <span id="cart-total">0</span></h3> 
-      <button class="checkout-btn">Checkout</button> 
+      <button class="checkout-btn" onclick="window.location.href='checkout.html'">Checkout</button> 
     </div> 
   </main> 
 
@@ -139,17 +139,14 @@
       const name = document.getElementById("reg-name").value.trim();
       const email = document.getElementById("reg-email").value.trim();
       const password = document.getElementById("reg-password").value;
-
       if (!name || !email || !password) {
         alert("Please fill in all registration fields.");
         return;
       }
-
       const user = new Backendless.User();
       user.name = name;
       user.email = email;
       user.password = password;
-
       try {
         await Backendless.UserService.register(user);
         alert("Registration successful! Please log in.");
@@ -164,12 +161,10 @@
     async function loginUser() {
       const email = document.getElementById("login-email").value.trim();
       const password = document.getElementById("login-password").value;
-
       if (!email || !password) {
         alert("Please enter both email and password.");
         return;
       }
-
       try {
         const user = await Backendless.UserService.login(email, password, true);
         showUserInfo(user);
@@ -193,7 +188,6 @@
       const cartItemsEl = document.getElementById('cart-items');
       const cartFooterEl = document.getElementById('cart-footer');
       const cartTotalEl = document.getElementById('cart-total');
-
       cartItemsEl.innerHTML = '';
       cartItemsEl.style.display = "block";
       cartFooterEl.style.display = "flex";
@@ -218,16 +212,20 @@
 
         let total = 0;
         cartItems.forEach(item => {
-          const subtotal = item.price * item.quantity;
+          const qty = item.quantity || 1;
+          const price = item.price || 0;
+          const subtotal = price * qty;
           total += subtotal;
+
+          const imageUrl = `https://backendlessappcontent.com/0889EC61-CC4A-4B8E-BD71-C27140B34E26/AskMyShoe/products-images/${item.productimage}`;
 
           cartItemsEl.innerHTML += `
             <div>
               <div class="item-info">
-                <img src="${item.productimage}" alt="${item.productname}" />
+                <img src="${imageUrl}" alt="${item.productname}" />
                 <div>
                   <h4>${item.productname}</h4>
-                  <p>KES ${item.price.toLocaleString()} x ${item.quantity}</p>
+                  <p>KES ${price.toLocaleString()} x ${qty}</p>
                 </div>
               </div>
               <div class="item-total">
@@ -239,7 +237,7 @@
 
         cartTotalEl.textContent = total.toLocaleString();
       } catch (error) {
-        console.error("Error loading cart:", error);
+        console.error(error);
         cartItemsEl.innerHTML = '<p>Failed to load cart items. Please try again later.</p>';
         cartTotalEl.textContent = '0';
       }
@@ -267,6 +265,10 @@
   </script> 
 </body>
 </html>
+
+
+
+
 
 
 
