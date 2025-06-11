@@ -103,6 +103,13 @@
       margin: 5px 5px 10px 0;
       border-radius: 5px;
       cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sizes span.selected {
+      background-color: #800080;
+      color: white;
+      border-color: #800080;
     }
 
     .actions {
@@ -150,7 +157,7 @@
  </head> 
  <body> 
   <header>
-   Ask My Shoe
+    Ask My Shoe 
   </header> 
   <div id="product-container">
     Loading product... 
@@ -212,12 +219,12 @@
           <div class="sizes">
             <strong>Sizes:</strong><br>
             ${(product.sizes || ['38','39','40','41']).map(size => `
-              <span>${size}</span>
+              <span data-size="${size}">${size}</span>
             `).join('')}
           </div>
           <div class="actions">
-            <a href="cart.html?id=${productId}" class="add-cart">🛒 Add to Cart</a>
-            <a href="checkout.html?id=${productId}" class="buy-now">Buy Now</a>
+            <a id="addToCart" href="#" class="add-cart">🛒 Add to Cart</a>
+            <a id="buyNow" href="#" class="buy-now">Buy Now</a>
           </div>
           <div class="tab">
             <h3>Description</h3>
@@ -230,12 +237,46 @@
         </div>
       `;
 
+      // Thumbnail image switching
       document.querySelectorAll('.thumbnails img').forEach(img => {
         img.addEventListener('click', () => {
           document.getElementById('main-image').src = img.src;
           document.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
           img.classList.add('active');
         });
+      });
+
+      // Size selection logic
+      const sizeSpans = document.querySelectorAll('.sizes span');
+      let selectedSize = null;
+
+      sizeSpans.forEach(span => {
+        span.addEventListener('click', () => {
+          sizeSpans.forEach(s => s.classList.remove('selected'));
+          span.classList.add('selected');
+          selectedSize = span.getAttribute('data-size');
+        });
+      });
+
+      // Button click handling
+      document.getElementById("addToCart").addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!selectedSize) {
+          alert("Please select a size first.");
+          return;
+        }
+        localStorage.setItem("selectedSize", selectedSize);
+        window.location.href = `cart.html?id=${productId}&size=${selectedSize}`;
+      });
+
+      document.getElementById("buyNow").addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!selectedSize) {
+          alert("Please select a size first.");
+          return;
+        }
+        localStorage.setItem("selectedSize", selectedSize);
+        window.location.href = `checkout.html?id=${productId}&size=${selectedSize}`;
       });
     }
 
@@ -259,4 +300,16 @@
   </script> 
  </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 
