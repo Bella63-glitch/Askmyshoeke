@@ -32,6 +32,11 @@
       border-radius: 4px;
       cursor: pointer;
     }
+    header .cart-link {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
     .section-title {
       font-size: 22px;
@@ -154,7 +159,7 @@
     <div class="search-cart">
       <input type="text" id="searchInput" placeholder="Search..." />
       <button onclick="filterProducts()">Search</button>
-      <div>🛒 Cart (0)</div>
+      <a href="cart.html" class="cart-link">🛒 Cart (0)</a>
     </div>
   </header>
 
@@ -162,8 +167,7 @@
     <div class="section-title">New Arrivals</div>
     <div class="carousel-wrapper">
       <div class="carousel-container">
-        <div class="carousel-slide" id="carousel-slide">
-          </div>
+        <div class="carousel-slide" id="carousel-slide"></div>
       </div>
     </div>
   </section>
@@ -171,7 +175,6 @@
   <section>
     <div class="section-title">All Products</div>
     <div id="product-list" class="products-grid"></div>
-
     <div class="view-all-btn">
       <a href="products.html">View All Products</a>
     </div>
@@ -270,10 +273,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-      
-      
-     
