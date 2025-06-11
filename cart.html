@@ -130,7 +130,6 @@
       <button class="checkout-btn" onclick="location.href='checkout.html'">Checkout</button> 
     </div> 
   </main> 
-
   <script src="https://cdn.jsdelivr.net/npm/backendless@7.2.5/dist/backendless.min.js"></script> 
   <script>
     Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
@@ -206,7 +205,7 @@
           const price = item.price || 0;
           const subtotal = price * qty;
           total += subtotal;
-          const imageUrl = `https://backendlessappcontent.com/0889EC61-CC4A-4B8E-BD71-C27140B34E26/products-images/${item.productimage}`;
+          const imageUrl = item.productimage;
 
           cartItemsEl.innerHTML += `
             <div>
@@ -254,6 +253,12 @@
   </script> 
 </body>
 </html>
+
+
+
+
+
+
 
 
 
