@@ -1,96 +1,63 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AskMyShoe - Home</title>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>AskMyShoe - Home</title> 
   <style>
     body { margin: 0; font-family: Arial, sans-serif; background: #fff; }
     header {
       background: linear-gradient(to right, #4b0082, #800080);
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
+      color: white; padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;
     }
-    header .logo { font-size: 24px; font-weight: bold; }
-    header .search-cart {
-      display: flex; gap: 10px; align-items: center;
-    }
+    .logo { font-size: 24px; font-weight: bold; }
+    .search-cart { display: flex; gap: 10px; align-items: center; }
     header input[type="text"] {
-      padding: 5px;
-      border-radius: 4px;
-      border: none;
+      padding: 5px; border-radius: 4px; border: none;
     }
     header button {
       padding: 5px 10px;
-      background-color: white;
-      color: #800080;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
+      background-color: white; color: #800080;
+      border: none; border-radius: 4px; cursor: pointer;
     }
-    header .cart-link {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
+    .cart-link {
+      color: white; text-decoration: none; font-weight: bold;
     }
 
     .section-title {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 20px 0 10px;
-      padding: 0 20px;
+      font-size: 22px; font-weight: bold;
+      margin: 20px 0 10px; padding: 0 20px;
     }
 
     .carousel-wrapper { padding: 0 20px; }
     .carousel-container {
-      position: relative;
-      width: 100%;
-      max-height: 300px;
-      overflow: hidden;
+      position: relative; width: 100%;
+      max-height: 300px; overflow: hidden;
       border-radius: 10px;
     }
     .carousel-slide {
-      display: flex;
-      transition: transform 0.6s ease-in-out;
+      display: flex; transition: transform 0.6s ease-in-out;
     }
     .carousel-item {
-      min-width: 100%;
-      box-sizing: border-box;
-      text-align: center;
-      background: #f5f5f5;
-      padding: 10px;
+      min-width: 100%; box-sizing: border-box;
+      text-align: center; background: #f5f5f5; padding: 10px;
     }
     .carousel-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
+      width: 100%; height: 200px; object-fit: cover; border-radius: 8px;
     }
     .carousel-item .info {
-      margin-top: 10px;
-      font-size: 16px;
-    }
-    .carousel-item a {
-      text-decoration: none;
-      color: inherit;
-      display: block;
+      margin-top: 10px; font-size: 16px;
     }
 
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 12px;
-      padding: 0 20px 20px;
+      gap: 12px; padding: 0 20px 20px;
     }
     .card {
-      background: #eee;
-      border-radius: 8px;
-      padding: 8px;
-      text-align: center;
+      background: #eee; border-radius: 8px;
+      padding: 8px; text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       font-size: 14px;
     }
@@ -98,40 +65,31 @@
       transform: scale(1.05);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
-    .card a {
-      text-decoration: none; color: inherit; display: block;
-    }
     .card img {
       width: 100%; height: 100px; object-fit: cover; border-radius: 5px;
+    }
+    .card a {
+      text-decoration: none; color: inherit; display: block;
     }
     .card button {
       margin-top: 6px;
       padding: 5px 8px;
       background-color: #800080;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 12px;
-      cursor: pointer;
+      color: white; border: none;
+      border-radius: 4px; font-size: 12px; cursor: pointer;
     }
 
     .view-all-btn {
-      text-align: center;
-      margin-bottom: 30px;
+      text-align: center; margin-bottom: 30px;
     }
     .view-all-btn a {
       display: inline-block;
-      background-color: #800080;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
+      background-color: #800080; color: white;
+      padding: 10px 20px; border-radius: 5px;
+      text-decoration: none; font-weight: bold;
       transition: background 0.3s ease;
     }
-    .view-all-btn a:hover {
-      background-color: #5e005e;
-    }
+    .view-all-btn a:hover { background-color: #5e005e; }
 
     .brand-logos {
       display: flex; flex-wrap: wrap;
@@ -146,130 +104,133 @@
 
     footer {
       background: #4b0082;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
+      color: white; text-align: center;
+      padding: 15px; margin-top: 30px;
     }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="logo">AskMyShoe</div>
-    <div class="search-cart">
-      <input type="text" id="searchInput" placeholder="Search..." />
-      <button onclick="filterProducts()">Search</button>
-      <a href="cart.html" class="cart-link">🛒 Cart (0)</a>
-    </div>
-  </header>
-
-  <section>
-    <div class="section-title">New Arrivals</div>
-    <div class="carousel-wrapper">
-      <div class="carousel-container">
-        <div class="carousel-slide" id="carousel-slide"></div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-title">All Products</div>
-    <div id="product-list" class="products-grid"></div>
-    <div class="view-all-btn">
-      <a href="products.html">View All Products</a>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-title">Brand Showcase</div>
-    <div class="brand-logos">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike" />
-      <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas" />
-      <img src="https://i.postimg.cc/XY8GxCG4/puma-2.png" alt="Custom Puma Logo" />
-    </div>
-  </section>
-
-  <footer>© 2025 AskMyShoe. All rights reserved.</footer>
-
+  </style> 
+ </head> 
+ <body> 
+  <header> 
+   <div class="logo">
+     AskMyShoe 
+   </div> 
+   <div class="search-cart"> 
+    <input type="text" id="searchInput" placeholder="Search..."> <button onclick="filterProducts()">Search</button> <a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a> 
+   </div> 
+  </header> 
+  <section> 
+   <div class="section-title">
+     New Arrivals 
+   </div> 
+   <div class="carousel-wrapper"> 
+    <div class="carousel-container"> 
+     <div class="carousel-slide" id="carousel-slide"></div> 
+    </div> 
+   </div> 
+  </section> 
+  <section> 
+   <div class="section-title">
+     All Products 
+   </div> 
+   <div id="product-list" class="products-grid"></div> 
+   <div class="view-all-btn"> <a href="products.html">View All Products</a> 
+   </div> 
+  </section> 
+  <section> 
+   <div class="section-title">
+     Brand Showcase 
+   </div> 
+   <div class="brand-logos"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike"> 
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas"> 
+    <img src="https://i.postimg.cc/XY8GxCG4/puma-2.png" alt="Custom Puma Logo"> 
+   </div> 
+  </section> 
+  <footer>
+    © 2025 AskMyShoe. All rights reserved. 
+  </footer> 
   <script>
-    const appId = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
-    const restApiKey = "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3";
-    const baseUrl = `https://api.backendless.com/${appId}/${restApiKey}/data/Products`;
+  const appId = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
+  const restApiKey = "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3";
+  const baseUrl = `https://api.backendless.com/${appId}/${restApiKey}/data/Products`;
 
-    let allProducts = [];
+  let allProducts = [];
 
-    async function fetchProducts() {
-      try {
-        const res = await fetch(`${baseUrl}?pageSize=100&sortBy=created%20DESC`);
-        const data = await res.json();
-        allProducts = data;
-        renderProducts();
-        renderCarousel();
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      }
+  async function fetchProducts() {
+    try {
+      const res = await fetch(`${baseUrl}?pageSize=100&sortBy=created%20DESC`);
+      const data = await res.json();
+      allProducts = data;
+      renderProducts();
+      renderCarousel();
+    } catch (err) {
+      console.error("Error fetching products:", err);
     }
+  }
 
-    function renderProducts() {
-      const productListEl = document.getElementById("product-list");
-      productListEl.innerHTML = "";
-      allProducts.forEach(p => {
-        productListEl.appendChild(createCard(p));
-      });
-    }
+  function createCard(product) {
+    const card = document.createElement("div");
+    card.className = "card";
+    const image = product.image || "https://via.placeholder.com/150";
+    card.innerHTML = `
+      <a href="details-products.html?id=${product.objectId}">
+        <img src="${image}" alt="${product.name}" />
+        <strong>${product.name}</strong>
+        <div>KSh ${product.price}</div>
+        <button>Buy Now</button>
+      </a>
+    `;
+    return card;
+  }
 
-    function createCard(product) {
-      const card = document.createElement("div");
-      card.className = "card";
-      const image = product.image || "https://via.placeholder.com/150";
-      card.innerHTML = `
+  function renderProducts() {
+    const productListEl = document.getElementById("product-list");
+    productListEl.innerHTML = "";
+    const limited = allProducts.slice(0, 12); // Only 12 products on home
+    limited.forEach(p => productListEl.appendChild(createCard(p)));
+  }
+
+  function filterProducts() {
+    const term = document.getElementById("searchInput").value.toLowerCase();
+    const filtered = allProducts.filter(p => p.name?.toLowerCase().includes(term));
+    const productListEl = document.getElementById("product-list");
+    productListEl.innerHTML = "";
+    filtered.forEach(p => productListEl.appendChild(createCard(p)));
+  }
+
+  function renderCarousel() {
+    const slideContainer = document.getElementById("carousel-slide");
+    const arrivals = allProducts.slice(0, 5);
+    slideContainer.innerHTML = "";
+
+    arrivals.forEach(product => {
+      const item = document.createElement("div");
+      item.className = "carousel-item";
+      const imgUrl = product.image || "https://via.placeholder.com/400x200";
+      item.innerHTML = `
         <a href="details-products.html?id=${product.objectId}">
-          <img src="${image}" alt="${product.name}" />
-          <strong>${product.name}</strong>
-          <div>KSh ${product.price}</div>
-          <button>Buy Now</button>
+          <img src="${imgUrl}" alt="${product.name}">
+          <div class="info"><strong>${product.name}</strong><br>KSh ${product.price}</div>
         </a>
       `;
-      return card;
-    }
+      slideContainer.appendChild(item);
+    });
 
-    function filterProducts() {
-      const term = document.getElementById("searchInput").value.toLowerCase();
-      const filtered = allProducts.filter(p => p.name?.toLowerCase().includes(term));
-      const productListEl = document.getElementById("product-list");
-      productListEl.innerHTML = "";
-      filtered.forEach(p => productListEl.appendChild(createCard(p)));
-    }
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % arrivals.length;
+      slideContainer.style.transform = `translateX(-${index * 100}%)`;
+    }, 3000);
+  }
 
-    function renderCarousel() {
-      const slideContainer = document.getElementById("carousel-slide");
-      const arrivals = allProducts.slice(0, 5); // Show top 5 newest
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    document.getElementById("cart-count").innerText = cart.length;
+  }
 
-      slideContainer.innerHTML = "";
-
-      arrivals.forEach(product => {
-        const item = document.createElement("div");
-        item.className = "carousel-item";
-        const imgUrl = product.image || "https://via.placeholder.com/400x200";
-
-        item.innerHTML = `
-          <a href="details-products.html?id=${product.objectId}">
-            <img src="${imgUrl}" alt="${product.name}">
-            <div class="info"><strong>${product.name}</strong><br>KSh ${product.price}</div>
-          </a>
-        `;
-        slideContainer.appendChild(item);
-      });
-
-      // Auto-slide
-      let index = 0;
-      setInterval(() => {
-        index = (index + 1) % arrivals.length;
-        slideContainer.style.transform = `translateX(-${index * 100}%)`;
-      }, 3000);
-    }
-
-    fetchProducts();
-  </script>
-</body>
+  fetchProducts();
+  updateCartCount();
+</script> 
+ </body>
 </html>
+
