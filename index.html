@@ -115,13 +115,13 @@
      AskMyShoe 
    </div> 
    <div class="search-cart"> 
-    <input type="text" id="searchInput" placeholder="Search..."> <button onclick="filterProducts()">Search</button> <a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a> 
+    <input type="text" id="searchInput" placeholder="Search..."> 
+    <button onclick="filterProducts()">Search</button> 
+    <a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a> 
    </div> 
   </header> 
   <section> 
-   <div class="section-title">
-     New Arrivals 
-   </div> 
+   <div class="section-title">New Arrivals</div> 
    <div class="carousel-wrapper"> 
     <div class="carousel-container"> 
      <div class="carousel-slide" id="carousel-slide"></div> 
@@ -129,17 +129,14 @@
    </div> 
   </section> 
   <section> 
-   <div class="section-title">
-     All Products 
-   </div> 
+   <div class="section-title">All Products</div> 
    <div id="product-list" class="products-grid"></div> 
-   <div class="view-all-btn"> <a href="products.html">View All Products</a> 
+   <div class="view-all-btn"> 
+     <a href="products.html">View All Products</a> 
    </div> 
   </section> 
   <section> 
-   <div class="section-title">
-     Brand Showcase 
-   </div> 
+   <div class="section-title">Brand Showcase</div> 
    <div class="brand-logos"> 
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike"> 
     <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas"> 
@@ -173,12 +170,17 @@
     card.className = "card";
     const image = product.image || "https://via.placeholder.com/150";
     card.innerHTML = `
-      <a href="details-products.html?id=${product.objectId}">
-        <img src="${image}" alt="${product.name}" />
-        <strong>${product.name}</strong>
-        <div>KSh ${product.price}</div>
-        <button>Buy Now</button>
-      </a>
+      <img src="${image}" alt="${product.name}" />
+      <strong>${product.name}</strong>
+      <div>KSh ${product.price}</div>
+      <button onclick='addToCart(${JSON.stringify({
+        objectId: product.objectId,
+        name: product.name,
+        price: product.price,
+        image: product.image || "",
+        quantity: 1
+      })})'>Buy Now</button>
+      <a href="details-products.html?id=${product.objectId}">View Details</a>
     `;
     return card;
   }
@@ -228,9 +230,21 @@
     document.getElementById("cart-count").innerText = cart.length;
   }
 
+  function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const index = cart.findIndex(item => item.objectId === product.objectId);
+    if (index !== -1) {
+      cart[index].quantity += 1;
+    } else {
+      cart.push(product);
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    alert(`${product.name} added to cart`);
+  }
+
   fetchProducts();
   updateCartCount();
 </script> 
  </body>
 </html>
-
