@@ -201,7 +201,7 @@
           </div>
         </div>
         <div class="details">
-          <h1>${product.name}</h1>
+          <h1>${product.name || 'No name provided'}</h1>
           <div class="price">
             <span class="current">KSh ${currentPrice.toLocaleString()}</span>
             ${originalPrice > currentPrice ? `
@@ -259,7 +259,4 @@
   </script> 
  </body>
 </html>
-
-
-
 
