@@ -69,6 +69,15 @@
       align-items: center;
       gap: 1rem;
     }
+    .remove-btn {
+      background-color: #ef4444;
+      color: white;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
     .cart-footer {
       margin-top: 2rem;
       display: flex;
@@ -105,7 +114,7 @@
 </head> 
 <body> 
   <header> 
-    <h1>ShoeStore</h1> 
+    <h1>Ask My Shoe</h1> 
     <div class="user-info" id="user-info" style="display: none;"> 
       <span id="greeting">Hi</span> 
       <button id="logout-btn">Logout</button> 
@@ -170,6 +179,15 @@
       location.reload();
     }
 
+    async function removeItem(objectId) {
+      try {
+        await Backendless.Data.of('Cart').remove(objectId);
+        loadCart();
+      } catch (e) {
+        alert("Failed to remove item: " + e.message);
+      }
+    }
+
     async function loadCart() {
       const cartItemsEl = document.getElementById('cart-items');
       const cartFooterEl = document.getElementById('cart-footer');
@@ -194,6 +212,7 @@
         if (!items.length) {
           cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
           cartTotalEl.textContent = '0';
+          cartFooterEl.style.display = "none";
           return;
         }
 
@@ -205,7 +224,7 @@
           const price = item.price || 0;
           const subtotal = price * qty;
           total += subtotal;
-          const imageUrl = item.productimage;
+          const imageUrl = item.productimage || 'fallback.jpg';
 
           cartItemsEl.innerHTML += `
             <div>
@@ -214,6 +233,7 @@
                 <div>
                   <h4>${name}</h4>
                   <p>KES ${price.toLocaleString()} x ${qty}</p>
+                  <button class="remove-btn" onclick="removeItem('${item.objectId}')">Remove</button>
                 </div>
               </div>
               <div>
@@ -253,12 +273,6 @@
   </script> 
 </body>
 </html>
-
-
-
-
-
-
 
 
 
