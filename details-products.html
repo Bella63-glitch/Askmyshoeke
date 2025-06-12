@@ -103,6 +103,13 @@
       margin: 5px 5px 10px 0;
       border-radius: 5px;
       cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .sizes span.selected {
+      background-color: orange;
+      color: white;
+      border-color: orange;
     }
 
     .actions {
@@ -163,6 +170,8 @@
 
     Backendless.initApp(APP_ID, API_KEY);
 
+    let selectedSize = null;
+
     function getProductIdFromURL() {
       const params = new URLSearchParams(window.location.search);
       return params.get("id");
@@ -190,6 +199,7 @@
       const discount = calculateDiscount(originalPrice, currentPrice);
 
       const productId = product.objectId;
+      const sizes = product.sizes || ['38', '39', '40', '41'];
 
       container.innerHTML = `
         <div class="image-gallery">
@@ -211,8 +221,8 @@
           </div>
           <div class="sizes">
             <strong>Sizes:</strong><br>
-            ${(product.sizes || ['38','39','40','41']).map(size => `
-              <span>${size}</span>
+            ${sizes.map(size => `
+              <span class="size-option" data-size="${size}">${size}</span>
             `).join('')}
           </div>
           <div class="actions">
@@ -237,6 +247,15 @@
           img.classList.add('active');
         });
       });
+
+      document.querySelectorAll('.size-option').forEach(sizeEl => {
+        sizeEl.addEventListener('click', () => {
+          document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
+          sizeEl.classList.add('selected');
+          selectedSize = sizeEl.getAttribute('data-size');
+          console.log("Selected size:", selectedSize);
+        });
+      });
     }
 
     async function loadProduct() {
@@ -259,3 +278,5 @@
   </script> 
  </body>
 </html>
+
+
