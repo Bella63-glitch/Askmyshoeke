@@ -1,409 +1,428 @@
 <!doctype html>
-<html lang="en"> 
- <head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>AskMyShoe - Home</title> 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #fff;
-    }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: linear-gradient(to right, #4b0082, #800080);
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
+<html lang="en">       
+ <head>       
+  <meta charset="UTF-8">       
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">       
+  <title>AskMyShoe - Home</title>       
+  <style>      
+    body {      
+      margin: 0;      
+      font-family: 'Segoe UI', sans-serif;      
+      background: #fff;      
+    }  header {      
+  position: sticky;      
+  top: 0;      
+  z-index: 1000;      
+  background: linear-gradient(to right, #4b0082, #800080);      
+  color: white;      
+  padding: 10px 20px;      
+  display: flex;      
+  justify-content: space-between; /* Distributes items along the line */
+  align-items: center;      
+  flex-wrap: wrap;      
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);      
+  position: relative; /* Make header a positioning context for absolute children */
+}    .header-left {  
+display: flex;  
+align-items: center;  
+gap: 10px;  
+/* No flex: 1 here */
+}  .header-left img {
+height: 80px;
+object-fit: contain;
+}
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+.header-left span {
+font-size: 28px;
+font-weight: bold;
+}
 
-    .header-left img {
-      height: 60px;
-      object-fit: contain;
-    }
+/* Updated CSS for centered logo within the header */
+.header-logo-center {
+  position: absolute; /* Position absolutely within the header */
+  left: 50%; /* Start at the horizontal center of the header */
+  transform: translateX(-50%); /* Move back by half its own width to truly center */
+  display: flex; /* Use flex to align logo within this container if needed */
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Ensure it spans the full height of the header */
+}
 
-    .header-left span {
-      font-size: 28px;
-      font-weight: bold;
-    }
+.header-logo-center img {
+  height: 80px; /* Maintain logo size */
+  object-fit: contain;
+}
 
-    .search-cart {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+/* Media queries for responsive visibility */
+@media (min-width: 768px) {
+  .header-left span {
+    display: block; /* Ensure "AskMyShoe" text is visible on the left */
+  }
+  .header-left img {
+    display: none; /* Hide the logo in header-left on larger screens */
+  }
+  .header-logo-center {
+    display: flex; /* Show the centered logo on larger screens */
+  }
+}
 
-    header input[type="text"] {
-      padding: 5px;
-      border-radius: 4px;
-      border: none;
-    }
+@media (max-width: 767px) {
+  .header-left span {
+    display: block; /* Show "AskMyShoe" text on the left for smaller screens */
+  }
+  .header-left img {
+    display: block; /* Show the logo next to "AskMyShoe" on smaller screens */
+  }
+  .header-logo-center {
+    display: none; /* Hide the absolutely positioned centered logo on smaller screens */
+  }
+}
 
-    header button {
-      padding: 5px 10px;
-      background-color: white;
-      color: #800080;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
 
-    .cart-link {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
+.search-cart {
+display: flex;
+gap: 10px;
+align-items: center;
+flex-wrap: wrap;
+}
 
-    .categories {
-      padding: 15px 20px;
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
+header input[type="text"] {
+padding: 5px;
+border-radius: 4px;
+border: none;
+}
 
-    .category-btn {
-      background-color: #eee;
-      border: none;
-      padding: 8px 15px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      font-weight: bold;
-    }
+header button {
+padding: 5px 10px;
+background-color: white;
+color: #800080;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+}
 
-    .category-btn:hover {
-      background-color: #800080;
-      color: white;
-    }
+.cart-link {
+color: white;
+text-decoration: none;
+font-weight: bold;
+}
 
-    .section-title {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 20px 0 10px;
-      padding: 0 20px;
-    }
+.categories {
+padding: 15px 20px;
+display: flex;
+gap: 15px;
+flex-wrap: wrap;
+justify-content: center;
+}
 
-    .carousel-wrapper {
-      padding: 0 20px;
-    }
+.category-btn {
+background-color: #eee;
+border: none;
+padding: 8px 15px;
+border-radius: 20px;
+cursor: pointer;
+transition: background 0.3s ease;
+font-weight: bold;
+}
 
-    .carousel-container {
-      position: relative;
-      width: 100%;
-      max-height: 300px;
-      overflow: hidden;
-      border-radius: 10px;
-    }
+.category-btn:hover {
+background-color: #800080;
+color: white;
+}
 
-    .carousel-slide {
-      display: flex;
-      transition: transform 0.6s ease-in-out;
-    }
+.section-title {
+font-size: 22px;
+font-weight: bold;
+margin: 20px 0 10px;
+padding: 0 20px;
+}
 
-    .carousel-item {
-      min-width: 100%;
-      box-sizing: border-box;
-      text-align: center;
-      background: #f5f5f5;
-      padding: 10px;
-    }
+.carousel-wrapper {
+padding: 0 20px;
+}
 
-    .carousel-item img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
+.carousel-container {
+position: relative;
+width: 100%;
+max-height: 300px;
+overflow: hidden;
+border-radius: 10px;
+}
 
-    .carousel-item .info {
-      margin-top: 10px;
-      font-size: 16px;
-    }
+.carousel-slide {
+display: flex;
+transition: transform 0.6s ease-in-out;
+}
 
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 12px;
-      padding: 0 20px 20px;
-    }
+.carousel-item {
+min-width: 100%;
+box-sizing: border-box;
+text-align: center;
+background: #f5f5f5;
+padding: 10px;
+}
 
-    .card {
-      background: #eee;
-      border-radius: 8px;
-      padding: 8px;
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      font-size: 14px;
-    }
+.carousel-item img {
+width: 100%;
+height: 200px;
+object-fit: cover;
+border-radius: 8px;
+}
 
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
+.carousel-item .info {
+margin-top: 10px;
+font-size: 16px;
+}
 
-    .card img {
-      width: 100%;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 5px;
-    }
+.products-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+gap: 12px;
+padding: 0 20px 20px;
+}
 
-    .card a {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
+.card {
+background: #eee;
+border-radius: 8px;
+padding: 8px;
+text-align: center;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+font-size: 14px;
+}
 
-    .card button {
-      margin-top: 6px;
-      padding: 5px 8px;
-      background-color: #800080;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 12px;
-      cursor: pointer;
-    }
+.card:hover {
+transform: scale(1.05);
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
-    .view-all-btn {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+.card img {
+width: 100%;
+height: 100px;
+object-fit: cover;
+border-radius: 5px;
+}
 
-    .view-all-btn a {
-      display: inline-block;
-      background-color: #800080;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
+.card a {
+text-decoration: none;
+color: inherit;
+display: block;
+}
 
-    .view-all-btn a:hover {
-      background-color: #5e005e;
-    }
+.card button {
+margin-top: 6px;
+padding: 5px 8px;
+background-color: #800080;
+color: white;
+border: none;
+border-radius: 4px;
+font-size: 12px;
+cursor: pointer;
+}
 
-    .brand-logos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 0;
-    }
+.view-all-btn {
+text-align: center;
+margin-bottom: 30px;
+}
 
-    .brand-logos img {
-      height: 30px;
-      object-fit: contain;
-      filter: grayscale(100%);
-      transition: filter 0.3s ease;
-    }
+.view-all-btn a {
+display: inline-block;
+background-color: #800080;
+color: white;
+padding: 10px 20px;
+border-radius: 5px;
+text-decoration: none;
+font-weight: bold;
+transition: background 0.3s ease;
+}
 
-    .brand-logos img:hover {
-      filter: grayscale(0%);
-    }
+.view-all-btn a:hover {
+background-color: #5e005e;
+}
 
-    footer {
-      background: #4b0082;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      padding: 10px 20px;
-      font-size: 12px;
-      gap: 40px;
-    }
+.brand-logos {
+display: flex;
+flex-wrap: wrap;
+gap: 20px;
+align-items: center;
+justify-content: center;
+padding: 10px 0;
+}
 
-    .footer-section {
-      min-width: auto;
-    }
+.brand-logos img {
+height: 30px;
+object-fit: contain;
+filter: grayscale(100%);
+transition: filter 0.3s ease;
+}
 
-    .footer-section h4 {
-      margin: 0 0 5px;
-      text-decoration: underline;
-      font-size: 13px;
-    }
+.brand-logos img:hover {
+filter: grayscale(0%);
+}
 
-    .footer-section p {
-      margin: 2px 0;
-    }
-  </style> 
- </head> 
- <body> 
-  <header> 
-   <div class="header-left"> 
-    <img src="https://i.postimg.cc/hGhcyK8C/ei-1749659947284-removebg-preview.png" alt="Logo"> <span>AskMyShoe</span> 
-   </div> 
-   <div class="search-cart"> 
-    <input type="text" id="searchInput" placeholder="Search..."> <button onclick="filterProducts()">Search</button> <a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a> 
-   </div> 
-  </header> 
-  <div class="categories"> <button class="category-btn" onclick="filterByCategory('Men')">Men</button> <button class="category-btn" onclick="filterByCategory('Women')">Women</button> <button class="category-btn" onclick="filterByCategory('Children')">Children</button> <button class="category-btn" onclick="filterByCategory('Boots')">Boots</button> <button class="category-btn" onclick="filterByCategory('Sneakers')">Sneakers</button> <button class="category-btn" onclick="filterByCategory('Heels')">Heels</button> <button class="category-btn" onclick="renderProducts()">All</button> 
-  </div> 
-  <section> 
-   <div class="section-title">
-     New Arrivals 
-   </div> 
-   <div class="carousel-wrapper"> 
-    <div class="carousel-container"> 
-     <div class="carousel-slide" id="carousel-slide"></div> 
-    </div> 
-   </div> 
-  </section> 
-  <section> 
-   <div class="section-title">
-     All Products 
-   </div> 
-   <div id="product-list" class="products-grid"></div> 
-   <div class="view-all-btn"> <a href="products.html">View All Products</a> 
-   </div> 
-  </section> 
-  <section> 
-   <div class="section-title">
-     Brand Showcase 
-   </div> 
-   <div class="brand-logos"> 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike"> 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas"> 
-    <img src="https://i.postimg.cc/XY8GxCG4/puma-2.png" alt="Puma"> 
-   </div> 
-  </section> 
-  <footer> 
-   <div class="footer-section"> 
-    <h4>Contact Details</h4> 
-    <p>Email: askmyshoe@gmail.com</p> 
-    <p>Phone: 0720380374</p> 
-   </div> 
-   <div class="footer-section"> 
-    <h4>Social Media</h4> 
-    <p>Facebook: Ask my shoe KE</p> 
-    <p>TikTok: @Askmyshoeke</p> 
-   </div> 
-  </footer> 
-  <script>
-    const appId = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
-    const restApiKey = "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3";
-    const baseUrl = `https://api.backendless.com/${appId}/${restApiKey}/data/Products`;
+footer {
+background: #4b0082;
+color: white;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+padding: 10px 20px;
+font-size: 12px;
+gap: 40px;
+}
 
-    let allProducts = [];
+.footer-section {
+min-width: auto;
+}
 
-    async function fetchProducts() {
-      try {
-        const res = await fetch(`${baseUrl}?pageSize=100&sortBy=created%20DESC`);
-        const data = await res.json();
-        allProducts = data;
-        renderProducts();
-        renderCarousel();
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      }
-    }
+.footer-section h4 {
+margin: 0 0 5px;
+text-decoration: underline;
+font-size: 13px;
+}
 
-    function createCard(product) {
-      const card = document.createElement("div");
-      card.className = "card";
-      const image = product.image || "https://via.placeholder.com/150";
-      card.innerHTML = `
-        <img src="${image}" alt="${product.name}" />
-        <strong>${product.name}</strong>
-        <div>KSh ${product.price}</div>
-        <button onclick='addToCart(${JSON.stringify({
-          objectId: product.objectId,
-          name: product.name,
-          price: product.price,
-          image: product.image || "",
-          quantity: 1
-        })})'>Buy Now</button>
-        <a href="details-products.html?id=${product.objectId}">View Details</a>
-      `;
-      return card;
-    }
+.footer-section p {
+margin: 2px 0;
+}
 
-    function renderProducts(products = allProducts.slice(0, 12)) {
-      const productListEl = document.getElementById("product-list");
-      productListEl.innerHTML = "";
-      products.forEach(p => productListEl.appendChild(createCard(p)));
-    }
+  </style>       
+ </head>       
+ <body>       
+  <header>       
+   <div class="header-left">       
+    <span>AskMyShoe</span>       
+    <img src="https://i.postimg.cc/hGhcyK8C/ei-1749659947284-removebg-preview.png" alt="Logo">
+   </div>       
+   <div class="header-logo-center">
+    <img src="https://i.postimg.cc/hGhcyK8C/ei-1749659947284-removebg-preview.png" alt="Logo">
+   </div>
+   <div class="search-cart">       
+    <input type="text" id="searchInput" placeholder="Search...">       
+    <button onclick="filterProducts()">Search</button>       
+    <a href="cart.html" class="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a>       
+   </div>       
+  </header>     <div class="categories">       
+    <button class="category-btn" onclick="filterByCategory('Men')">Men</button>       
+    <button class="category-btn" onclick="filterByCategory('Women')">Women</button>       
+    <button class="category-btn" onclick="filterByCategory('Children')">Children</button>       
+    <button class="category-btn" onclick="filterByCategory('Boots')">Boots</button>       
+    <button class="category-btn" onclick="filterByCategory('Sneakers')">Sneakers</button>       
+    <button class="category-btn" onclick="filterByCategory('Heels')">Heels</button>       
+    <button class="category-btn" onclick="filterByCategory('Crab Kids School Shoes')">Crab Kids School Shoes</button>       
+    <button class="category-btn" onclick="renderProducts()">All</button>       
+  </div>     <section>       
+   <div class="section-title">New Arrivals</div>       
+   <div class="carousel-wrapper">       
+    <div class="carousel-container">       
+     <div class="carousel-slide" id="carousel-slide"></div>       
+    </div>       
+   </div>       
+  </section>     <section>       
+   <div class="section-title">All Products</div>       
+   <div id="product-list" class="products-grid"></div>       
+   <div class="view-all-btn">       
+    <a href="products.html">View All Products</a>       
+   </div>       
+  </section>     <section>       
+   <div class="section-title">Brand Showcase</div>       
+   <div class="brand-logos">       
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a6/Logo_NIKE.svg" alt="Nike">       
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Adidas_Logo.svg" alt="Adidas">       
+    <img src="https://i.postimg.cc/XY8GxCG4/puma-2.png" alt="Puma">       
+   </div>       
+  </section>     <footer>       
+   <div class="footer-section">       
+    <h4>Contact Details</h4>       
+    <p>Email: askmyshoe@gmail.com</p>       
+    <p>Phone: 0720380374</p>       
+   </div>       
+   <div class="footer-section">       
+    <h4>Social Media</h4>       
+    <p>Facebook: Ask my shoe KE</p>       
+    <p>TikTok: @Askmyshoeke</p>       
+   </div>       
+  </footer>     <script>      
+    const appId = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";      
+    const restApiKey = "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3";      
+    const baseUrl = `https://api.backendless.com/${appId}/${restApiKey}/data/Products`;    let allProducts = [];      async function fetchProducts() {
+try {
+const res = await fetch(`${baseUrl}?pageSize=100&sortBy=created%20DESC`);
+const data = await res.json();
+allProducts = data;
+renderProducts();
+renderCarousel();
+} catch (err) {
+console.error("Error fetching products:", err);
+}
+}
 
-    function filterProducts() {
-      const term = document.getElementById("searchInput").value.toLowerCase();
-      const filtered = allProducts.filter(p => p.name?.toLowerCase().includes(term));
-      renderProducts(filtered);
-    }
+function createCard(product) {
+const card = document.createElement("div");
+card.className = "card";
+const image = product.image || "https://via.placeholder.com/150";
+card.innerHTML = `<img src="${image}" alt="${product.name}" />       <strong>${product.name}</strong>       <div>KSh ${product.price}</div>       <button onclick='addToCart(${JSON.stringify({       objectId: product.objectId,       name: product.name,       price: product.price,       image: product.image || "",       quantity: 1       })})'>Buy Now</button>       <a href="details-products.html?id=${product.objectId}">View Details</a>`;
+return card;
+}
 
-    function filterByCategory(category) {
-      const filtered = allProducts.filter(p => p.category?.toLowerCase() === category.toLowerCase());
-      renderProducts(filtered);
-    }
+function renderProducts(products = allProducts.slice(0, 12)) {
+const productListEl = document.getElementById("product-list");
+productListEl.innerHTML = "";
+products.forEach(p => productListEl.appendChild(createCard(p)));
+}
 
-    function renderCarousel() {
-      const slideContainer = document.getElementById("carousel-slide");
-      const arrivals = allProducts.slice(0, 5);
-      slideContainer.innerHTML = "";
+function filterProducts() {
+const term = document.getElementById("searchInput").value.toLowerCase();
+const filtered = allProducts.filter(p => p.name?.toLowerCase().includes(term));
+renderProducts(filtered);
+}
 
-      arrivals.forEach(product => {
-        const item = document.createElement("div");
-        item.className = "carousel-item";
-        const imgUrl = product.image || "https://via.placeholder.com/400x200";
-        item.innerHTML = `
-          <a href="details-products.html?id=${product.objectId}">
-            <img src="${imgUrl}" alt="${product.name}">
-            <div class="info"><strong>${product.name}</strong><br>KSh ${product.price}</div>
-          </a>
-        `;
-        slideContainer.appendChild(item);
-      });
+function filterByCategory(category) {
+const filtered = allProducts.filter(p => p.category?.toLowerCase() === category.toLowerCase());
+renderProducts(filtered);
+}
 
-      let index = 0;
-      setInterval(() => {
-        index = (index + 1) % arrivals.length;
-        slideContainer.style.transform = `translateX(-${index * 100}%)`;
-      }, 3000);
-    }
+function renderCarousel() {
+const slideContainer = document.getElementById("carousel-slide");
+const arrivals = allProducts.slice(0, 5);
+slideContainer.innerHTML = "";
 
-    function updateCartCount() {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      document.getElementById("cart-count").innerText = cart.length;
-    }
+arrivals.forEach(product => {
+const item = document.createElement("div");
+item.className = "carousel-item";
+const imgUrl = product.image || "https://via.placeholder.com/400x200";
+item.innerHTML = `<a href="details-products.html?id=${product.objectId}">       <img src="${imgUrl}" alt="${product.name}">       <div class="info"><strong>${product.name}</strong><br>KSh ${product.price}</div>       </a>`;
+slideContainer.appendChild(item);
+});
 
-    function addToCart(product) {
-      let cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const index = cart.findIndex(item => item.objectId === product.objectId);
-      if (index !== -1) {
-        cart[index].quantity += 1;
-      } else {
-        cart.push(product);
-      }
-      localStorage.setItem("cart", JSON.stringify(cart));
-      updateCartCount();
-      alert(`${product.name} added to cart`);
-    }
+let index = 0;
+setInterval(() => {
+index = (index + 1) % arrivals.length;
+slideContainer.style.transform = `translateX(-${index * 100}%)`;
+}, 3000);
+}
 
-    fetchProducts();
-    updateCartCount();
-  </script> 
- </body>
+function updateCartCount() {
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+document.getElementById("cart-count").innerText = cart.length;
+}
+
+function addToCart(product) {
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const index = cart.findIndex(item => item.objectId === product.objectId);
+if (index !== -1) {
+cart[index].quantity += 1;
+} else {
+cart.push(product);
+}
+localStorage.setItem("cart", JSON.stringify(cart));
+updateCartCount();
+alert(`${product.name} added to cart`);
+}
+
+fetchProducts();
+updateCartCount();
+
+</script>    </body>
+
 </html>
-
-
-
-
