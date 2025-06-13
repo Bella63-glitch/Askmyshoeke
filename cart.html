@@ -11,14 +11,15 @@
   <header class="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-6 px-4 shadow-md">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold">Ask My Shoe</h1>
+      <a href="index.html" class="text-sm underline">← Back to Shop</a>
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Cart Main Content -->
   <main class="max-w-6xl mx-auto p-6 mt-6">
     <section class="bg-white p-6 rounded-lg shadow">
       <h2 class="text-xl font-semibold mb-4">Shopping Cart</h2>
-      <div id="cartItems" class="space-y-4"></div>
+      <div id="cartItems"></div>
       <div class="mt-6 flex justify-between items-center">
         <div class="text-lg font-semibold">Total: KSh <span id="totalAmount">0</span></div>
         <a href="checkout.html" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">Proceed to Checkout</a>
@@ -35,7 +36,7 @@
       cartItemsDiv.innerHTML = "";
 
       if (cart.length === 0) {
-        cartItemsDiv.innerHTML = "<p class='text-gray-600'>Your cart is empty.</p>";
+        cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
         document.getElementById("totalAmount").textContent = "0";
         return;
       }
@@ -45,18 +46,21 @@
       cart.forEach((item, index) => {
         const quantity = item.quantity || 1;
         const price = item.price || 0;
-        const image = item.productimage || "https://via.placeholder.com/100";
         const itemTotal = quantity * price;
         total += itemTotal;
 
+        const imageUrl = item.productimage?.startsWith("http")
+          ? item.productimage
+          : `https://backendlessappcontent.com/889EC61-CC4A-4B8E-BD71-C27140B34E26/9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3/files/products-images/${item.productimage}`;
+
         const itemDiv = document.createElement("div");
-        itemDiv.className = "border-b pb-4 flex gap-4 items-start";
+        itemDiv.className = "border-b py-4 flex items-center gap-4";
 
         itemDiv.innerHTML = `
-          <img src="${image}" alt="${item.productName}" class="w-24 h-24 object-cover rounded shadow" />
-          <div class="flex-1">
-            <div class="font-semibold text-lg">${item.productName}</div>
-            <div class="text-sm text-gray-600 mb-1">Size: ${item.size || "N/A"}, Color: ${item.color || "N/A"}</div>
+          <img src="${imageUrl}" alt="${item.productName}" class="w-24 h-24 object-cover rounded border" />
+          <div class="flex-grow">
+            <div class="font-semibold">${item.productName}</div>
+            <div class="text-sm text-gray-600">Size: ${item.size || "N/A"}, Color: ${item.color || "N/A"}</div>
             <div class="text-sm">Quantity: ${quantity}</div>
             <div class="text-sm">Price: KSh ${price.toLocaleString()}</div>
             <div class="text-sm font-bold">Subtotal: KSh ${itemTotal.toLocaleString()}</div>
@@ -80,4 +84,5 @@
   </script>
 </body>
 </html>
+
 
