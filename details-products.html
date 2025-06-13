@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"> 
- <head> 
+<head> 
   <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <title>Product Details</title> 
@@ -116,13 +116,16 @@
       margin-top: 15px;
     }
 
-    .actions a {
+    .actions a,
+    .actions button {
       display: inline-block;
       margin: 5px 10px 5px 0;
       padding: 10px 20px;
       font-size: 1em;
       text-decoration: none;
       border-radius: 5px;
+      border: none;
+      cursor: pointer;
     }
 
     .add-cart {
@@ -154,14 +157,11 @@
       }
     }
   </style> 
- </head> 
- <body> 
-  <header>
-    Ask My Shoe 
-  </header> 
-  <div id="product-container">
-    Loading product... 
-  </div> 
+</head> 
+<body> 
+  <header>Ask My Shoe</header> 
+  <div id="product-container">Loading product...</div> 
+
   <script>
     const APP_ID = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
     const API_KEY = "63AB1DF8-175A-48B6-8F9C-EE24F2E58F21";
@@ -226,7 +226,7 @@
             `).join('')}
           </div>
           <div class="actions">
-            <a href="cart.html?id=${productId}" class="add-cart">🛒 Add to Cart</a>
+            <button class="add-cart" id="addToCartBtn">🛒 Add to Cart</button>
             <a href="checkout.html?id=${productId}" class="buy-now">Buy Now</a>
           </div>
           <div class="tab">
@@ -253,8 +253,29 @@
           document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
           sizeEl.classList.add('selected');
           selectedSize = sizeEl.getAttribute('data-size');
-          console.log("Selected size:", selectedSize);
         });
+      });
+
+      document.getElementById("addToCartBtn").addEventListener("click", () => {
+        if (!selectedSize) {
+          alert("Please select a size before adding to cart.");
+          return;
+        }
+
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const cartItem = {
+          productId: product.objectId,
+          name: product.name,
+          price: currentPrice,
+          size: selectedSize,
+          color: product.color || "N/A",
+          image: product.image || "",
+        };
+
+        cart.push(cartItem);
+        localStorage.setItem("cart", JSON.stringify(cart));
+        alert("Item added to cart!");
       });
     }
 
@@ -276,7 +297,5 @@
 
     loadProduct();
   </script> 
- </body>
+</body>
 </html>
-
-
