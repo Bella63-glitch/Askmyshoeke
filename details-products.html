@@ -16,10 +16,21 @@
       background: linear-gradient(to right, #4b0082, #800080);
       color: white;
       padding: 15px 20px;
-      text-align: center;
-      font-size: 1.8em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.4em;
+    }
+
+    header .logo {
       font-weight: bold;
       letter-spacing: 1px;
+    }
+
+    .cart-icon {
+      text-decoration: none;
+      color: white;
+      font-size: 1.4em;
     }
 
     #product-container {
@@ -151,6 +162,19 @@
       font-weight: bold;
     }
 
+    footer {
+      background: linear-gradient(to right, #4b0082, #800080);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.95em;
+      margin-top: 40px;
+    }
+
+    footer p {
+      margin: 6px 0;
+    }
+
     @media (max-width: 768px) {
       #product-container {
         flex-direction: column;
@@ -159,8 +183,20 @@
   </style> 
 </head> 
 <body> 
-  <header>Ask My Shoe</header> 
+  <header>
+    <div class="logo">Ask My Shoe</div>
+    <a href="cart.html" class="cart-icon" title="View Cart">🛒</a>
+  </header>
+
   <div id="product-container">Loading product...</div> 
+
+  <footer>
+    <p><strong>Contact Details</strong></p>
+    <p>Email: Askmyshoe@gmail.com</p>
+    <p>Phone: 0720380374</p>
+    <p>Facebook: Ask my shoe KE</p>
+    <p>TikTok: @Askmyshoeke</p>
+  </footer>
 
   <script>
     const APP_ID = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
@@ -275,7 +311,8 @@
 
         cart.push(cartItem);
         localStorage.setItem("cart", JSON.stringify(cart));
-        alert("Item added to cart!");
+
+        window.location.href = "cart.html";
       });
     }
 
@@ -299,3 +336,5 @@
   </script> 
 </body>
 </html>
+
+
