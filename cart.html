@@ -139,6 +139,7 @@
       <button class="checkout-btn" onclick="location.href='checkout.html'">Checkout</button> 
     </div> 
   </main> 
+
   <script src="https://cdn.jsdelivr.net/npm/backendless@7.2.5/dist/backendless.min.js"></script> 
   <script>
     Backendless.initApp("0889EC61-CC4A-4B8E-BD71-C27140B34E26", "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3");
@@ -181,6 +182,14 @@
 
     async function removeItem(objectId) {
       try {
+        const item = await Backendless.Data.of('Cart').findById(objectId);
+        if (item && item.productid) {
+          // Remove from localStorage too
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const updatedCart = cart.filter(ci => ci.id !== item.productid);
+          localStorage.setItem("cart", JSON.stringify(updatedCart));
+        }
+
         await Backendless.Data.of('Cart').remove(objectId);
         loadCart();
       } catch (e) {
@@ -273,6 +282,5 @@
   </script> 
 </body>
 </html>
-
 
 
