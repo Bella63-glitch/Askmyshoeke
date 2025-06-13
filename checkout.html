@@ -63,6 +63,10 @@
 
         <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded">Place Order</button> 
       </form> 
+
+      <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
+        ✅ Your order has been placed successfully! Please check your phone for the MPesa prompt.
+      </div>
     </section> 
   </main> 
 
@@ -92,6 +96,7 @@
 
       const summaryDiv = document.createElement("div");
       summaryDiv.classList.add("mb-4", "border", "rounded", "p-4", "bg-gray-100");
+      summaryDiv.id = "cart-summary";
 
       let itemsHTML = "";
       subtotal = 0;
@@ -127,7 +132,9 @@
         </div>
       `;
 
-      document.getElementById("checkoutForm").prepend(summaryDiv);
+      const form = document.getElementById("checkoutForm");
+      form.querySelector("#cart-summary")?.remove();
+      form.prepend(summaryDiv);
     }
 
     function updateTotal() {
@@ -175,14 +182,14 @@
         await Backendless.Data.of("Checkout").save(order);
 
         if (order.paymentMethod === "mpesa") {
-          alert("Redirecting to MPesa payment...");
           await initiateMpesaPayment(order.phoneNumber, total);
         }
 
-        alert("Order placed successfully!");
+        // Show confirmation message
+        document.getElementById("confirmationMessage").classList.remove("hidden");
+
         localStorage.removeItem("cart");
         document.getElementById("checkoutForm").reset();
-        document.querySelector("#checkoutForm div#cart-summary")?.remove();
         displayCartSummary();
         updateTotal();
       } catch (err) {
@@ -217,3 +224,9 @@
   </script> 
 </body>
 </html>
+
+
+
+
+
+
