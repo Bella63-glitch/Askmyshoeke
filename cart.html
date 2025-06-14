@@ -27,9 +27,33 @@
     </section>
   </main>
 
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-purple-900 to-purple-700 text-white text-center py-6 mt-10">
+    <p><strong>Contact Details</strong></p>
+    <p>Email: Askmyshoe@gmail.com</p>
+    <p>Phone: 0720380374</p>
+    <p>Facebook: Ask my shoe KE</p>
+    <p>TikTok: @Askmyshoeke</p>
+  </footer>
+
   <!-- Script -->
   <script>
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function updateCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    function changeQuantity(index, delta) {
+      cart[index].quantity = Math.max(1, (cart[index].quantity || 1) + delta);
+      updateCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
 
     function renderCart() {
       const cartItemsDiv = document.getElementById("cartItems");
@@ -49,23 +73,27 @@
         const itemTotal = quantity * price;
         total += itemTotal;
 
-        const imageUrl = item.productimage?.startsWith("http")
-          ? item.productimage
-          : `https://backendlessappcontent.com/889EC61-CC4A-4B8E-BD71-C27140B34E26/9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3/files/products-images/${item.productimage}`;
+        const imageUrl = item.image?.startsWith("http")
+          ? item.image
+          : `https://backendlessappcontent.com/0889EC61-CC4A-4B8E-BD71-C27140B34E26/1C1E9D44-CBC2-43B3-B83C-2B9E53F58E9A/files/products-images/${item.image}`;
 
         const itemDiv = document.createElement("div");
         itemDiv.className = "border-b py-4 flex items-center gap-4";
 
         itemDiv.innerHTML = `
-          <img src="${imageUrl}" alt="${item.productName}" class="w-24 h-24 object-cover rounded border" />
+          <img src="${imageUrl}" alt="${item.name}" class="w-24 h-24 object-cover rounded border" />
           <div class="flex-grow">
-            <div class="font-semibold">${item.productName}</div>
+            <div class="font-semibold">${item.name}</div>
             <div class="text-sm text-gray-600">Size: ${item.size || "N/A"}, Color: ${item.color || "N/A"}</div>
-            <div class="text-sm">Quantity: ${quantity}</div>
-            <div class="text-sm">Price: KSh ${price.toLocaleString()}</div>
+            <div class="text-sm flex items-center mt-1">
+              <button onclick="changeQuantity(${index}, -1)" class="bg-gray-300 px-2 rounded text-black">−</button>
+              <span class="mx-2">${quantity}</span>
+              <button onclick="changeQuantity(${index}, 1)" class="bg-gray-300 px-2 rounded text-black">+</button>
+            </div>
+            <div class="text-sm mt-1">Price: KSh ${price.toLocaleString()}</div>
             <div class="text-sm font-bold">Subtotal: KSh ${itemTotal.toLocaleString()}</div>
           </div>
-          <button class="text-red-500 text-sm underline" onclick="removeItem(${index})">Remove</button>
+          <button class="text-red-500 text-sm underline ml-2" onclick="removeItem(${index})">Remove</button>
         `;
 
         cartItemsDiv.appendChild(itemDiv);
@@ -74,15 +102,10 @@
       document.getElementById("totalAmount").textContent = total.toLocaleString();
     }
 
-    function removeItem(index) {
-      cart.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      renderCart();
-    }
-
     document.addEventListener("DOMContentLoaded", renderCart);
   </script>
 </body>
 </html>
+
 
 
