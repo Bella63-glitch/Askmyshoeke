@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -13,76 +12,86 @@
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold">Ask My Shoe</h1>
     </div>
-  </header>  <main class="max-w-6xl mx-auto p-6 mt-6">
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6 mt-6">
     <section class="bg-white p-6 rounded-lg shadow">
       <h2 class="text-xl font-semibold mb-4">Delivery Information</h2>
       <form id="checkoutForm" class="space-y-4">
-        <input id="email" type="email" placeholder="Email or mobile number" class="w-full border rounded px-3 py-2" required>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input id="firstName" type="text" placeholder="First Name" class="w-full border rounded px-3 py-2" required>
-          <input id="lastName" type="text" placeholder="Last Name" class="w-full border rounded px-3 py-2" required>
+        <!-- Cart Summary -->
+        <div id="cart-summary" class="mb-4 border rounded p-4 bg-gray-100 hidden">
+          <h3 class="font-semibold mb-2">🛒 Order Summary</h3>
+          <div id="cart-items"></div>
+          <div class="flex justify-between mt-2 font-bold">
+            <span>Subtotal:</span>
+            <span id="cartSubtotal">KSh 0</span>
+          </div>
         </div>
-        <input id="address" type="text" placeholder="Address" class="w-full border rounded px-3 py-2" required>
-        <input id="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full border rounded px-3 py-2">
-        <input id="city" type="text" placeholder="City" class="w-full border rounded px-3 py-2" required>
-        <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required><label class="block font-medium mb-1">Shipping Method</label>
-    <select id="shippingMethod" class="w-full border rounded px-3 py-2" required>
-      <option value="nairobi g4s">Nairobi G4S - KES 350</option>
-      <option value="nearby counties">Nearby Counties - KES 400</option>
-      <option value="nairobi cbd wells fargo">Nairobi CBD (Wells Fargo) - KES 400</option>
-      <option value="nairobi near cbd">Nairobi near CBD - KES 400</option>
-      <option value="outside nairobi">Outside Nairobi - KES 450</option>
-      <option value="far counties">Far Counties - KES 500</option>
-      <option value="nairobi far">Nairobi far from CBD - KES 500</option>
-      <option value="nairobi rider">Nairobi with Rider - KES 500</option>
-    </select>
 
-    <div class="text-right text-sm text-gray-500 mt-2">
-      Delivery Fee: <span id="deliveryFee">Ksh 0</span>
-    </div>
+        <input id="email" type="email" placeholder="Email or mobile number" class="w-full border rounded px-3 py-2" required />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input id="firstName" type="text" placeholder="First Name" class="w-full border rounded px-3 py-2" required />
+          <input id="lastName" type="text" placeholder="Last Name" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <input id="address" type="text" placeholder="Address" class="w-full border rounded px-3 py-2" required />
+        <input id="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full border rounded px-3 py-2" />
+        <input id="city" type="text" placeholder="City" class="w-full border rounded px-3 py-2" required />
+        <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required />
 
-    <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">
-      Total: KSh 0
-    </div>
+        <label class="block font-medium mb-1">Shipping Method</label>
+        <select id="shippingMethod" class="w-full border rounded px-3 py-2" required>
+          <option value="nairobi-g4s">Within Nairobi (Kitengela, Kikuyu, Juja) - KES 350</option>
+          <option value="outside-near">Outside Nairobi (Nearby Counties) - KES 400</option>
+          <option value="nairobi-cbd-wells">Within Nairobi (CBD - Wells Fargo) - KES 400</option>
+          <option value="nairobi-near-cbd">Within Nairobi (Near CBD) - KES 400</option>
+          <option value="outside">Outside Nairobi - KES 450</option>
+          <option value="outside-far">Outside Nairobi (Far Counties) - KES 500</option>
+          <option value="nairobi-far">Within Nairobi (Far from CBD) - KES 500</option>
+          <option value="nairobi-rider">Within Nairobi (Kitengela, Kikuyu, Juja - Rider) - KES 500</option>
+        </select>
 
-    <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded">
-      I’ve Paid – Confirm via WhatsApp
-    </button>
-  </form>
+        <!-- Improved Payment Instructions -->
+        <div class="text-base bg-yellow-100 text-yellow-900 border border-yellow-400 rounded p-4 mt-4 font-semibold leading-relaxed">
+          💳 <strong class="text-lg">PAYMENT INSTRUCTIONS</strong><br />
+          Kindly complete your payment via <strong>M-PESA</strong> before confirming your order.<br />
+          <strong>Paybill:</strong> <span class="text-purple-800">247247</span><br />
+          <strong>Account Number:</strong> <span class="text-purple-800">0720380374</span><br />
+          🧾 After payment, click the button below to confirm your order via WhatsApp.
+        </div>
 
-  <div class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded">
-    <h3 class="font-bold mb-1">📢 Payment Instructions</h3>
-    <ul class="list-disc ml-6 text-sm">
-      <li>Go to your M-PESA menu</li>
-      <li>Select Lipa na M-PESA</li>
-      <li>Select Paybill</li>
-      <li>Enter Paybill Number: <strong>247247</strong></li>
-      <li>Enter Account Number: <strong>0720380374</strong></li>
-      <li>Enter the amount shown above (Total)</li>
-      <li>Then click the button above to confirm via WhatsApp</li>
-    </ul>
-  </div>
+        <div class="text-right text-sm text-gray-500 mt-1">
+          Delivery Fee: <span id="deliveryFee">KSh 0</span>
+        </div>
+        <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">
+          Total: KSh 0
+        </div>
 
-  <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
-    ✅ Your order has been placed successfully! Please click the button to confirm via WhatsApp.
-  </div>
-</section>
+        <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded mt-2">
+          I’ve Paid – Confirm via WhatsApp
+        </button>
+      </form>
 
-  </main>  <script>
+      <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
+        ✅ Your order has been placed successfully! You’ll be redirected to WhatsApp to confirm.
+      </div>
+    </section>
+  </main>
+
+  <script>
     Backendless.initApp(
       "0889EC61-CC4A-4B8E-BD71-C27140B34E26",
       "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3"
     );
 
     const shippingFees = {
-      "nairobi g4s": 350,
-      "nearby counties": 400,
-      "nairobi cbd wells fargo": 400,
-      "nairobi near cbd": 400,
-      "outside nairobi": 450,
-      "far counties": 500,
-      "nairobi far": 500,
-      "nairobi rider": 500,
+      "nairobi-g4s": 350,
+      "outside-near": 400,
+      "nairobi-cbd-wells": 400,
+      "nairobi-near-cbd": 400,
+      "outside": 450,
+      "outside-far": 500,
+      "nairobi-far": 500,
+      "nairobi-rider": 500,
     };
 
     let subtotal = 0;
@@ -90,15 +99,43 @@
 
     function displayCartSummary() {
       cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartSummaryDiv = document.getElementById("cart-summary");
+      const cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = "";
       subtotal = 0;
+
+      if (cart.length === 0) {
+        cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
+      } else {
+        cart.forEach(item => {
+          const quantity = item.quantity || 1;
+          const price = item.price || 0;
+          const itemSubtotal = quantity * price;
+          subtotal += itemSubtotal;
+
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "border-b py-2";
+          itemDiv.innerHTML = `
+            <div class="font-semibold">${item.name}</div>
+            <div class="text-sm">Size: ${item.size || "N/A"}, Color: ${item.color || "N/A"}</div>
+            <div class="flex justify-between text-sm">
+              <span>Quantity: ${quantity}</span>
+              <span>Subtotal: KSh ${itemSubtotal.toLocaleString()}</span>
+            </div>
+          `;
+          cartItemsDiv.appendChild(itemDiv);
+        });
+        document.getElementById("cartSubtotal").textContent = `KSh ${subtotal.toLocaleString()}`;
+      }
+
+      cartSummaryDiv.classList.remove("hidden");
     }
 
     function updateTotal() {
       const shippingMethod = document.getElementById("shippingMethod").value;
       const deliveryFee = shippingFees[shippingMethod] || 0;
-      subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+      document.getElementById("deliveryFee").textContent = `KSh ${deliveryFee}`;
       const total = subtotal + deliveryFee;
-      document.getElementById("deliveryFee").textContent = `Ksh ${deliveryFee}`;
       document.getElementById("totalDisplay").textContent = `Total: KSh ${total.toLocaleString()}`;
     }
 
@@ -112,49 +149,64 @@
     document.getElementById("checkoutForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      cart = JSON.parse(localStorage.getItem("cart")) || [];
+      if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return;
+      }
+
       const shippingMethod = document.getElementById("shippingMethod").value;
       const deliveryFee = shippingFees[shippingMethod] || 0;
-      const subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
       const total = subtotal + deliveryFee;
-      const firstName = document.getElementById("firstName").value;
-      const lastName = document.getElementById("lastName").value;
-      const fullName = `${firstName} ${lastName}`;
+
+      const fullName = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
       const phone = document.getElementById("phoneNumber").value;
 
       const order = {
         email: document.getElementById("email").value,
-        fullName,
+        fullName: fullName,
         address: document.getElementById("address").value,
         apartment: document.getElementById("apartment").value,
         city: document.getElementById("city").value,
         phoneNumber: phone,
-        shippingMethod,
-        deliveryFee,
+        shippingMethod: shippingMethod,
+        deliveryFee: deliveryFee,
         paymentMethod: "mpesa",
-        total,
+        total: total,
         cartItems: cart
       };
 
       try {
         await Backendless.Data.of("Orders").save(order);
+
         document.getElementById("confirmationMessage").classList.remove("hidden");
-        localStorage.removeItem("cart");
 
         const whatsappNumber = "254720380374";
-        let message = `Hey, my name is ${fullName}. I’ve paid KES ${total} to Paybill 247247.\n\n`;
-        message += `🛒 Order Summary:\n`;
-        cart.forEach(item => {
-          const quantity = item.quantity || 1;
-          const price = item.price || 0;
-          message += `• ${item.name} (${item.size || "N/A"}, ${item.color || "N/A"}) x${quantity} - KES ${price * quantity}\n`;
-        });
-        message += `\n🚚 Delivery Location: ${shippingMethod} (KES ${deliveryFee})\n📦 Total Paid: KES ${total}\n📱 Phone: ${phone}`;
+        const cartDetails = cart.map(item => {
+          return `• ${item.name} (${item.size || "N/A"}, ${item.color || "N/A"}) x${item.quantity || 1} - KES ${item.price * (item.quantity || 1)}`;
+        }).join("\n");
 
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
+        const message = encodeURIComponent(
+          `🛒 Order Summary:\n${cartDetails}\n\n` +
+          `🚚 Shipping: ${shippingMethod.replace(/-/g, ' ')} (${deliveryFee})\n📦 Total Paid: KES ${total}\n\n` +
+          `Hello, my name is ${fullName}.\nI have paid KES ${total} to Paybill 247247.\nPhone: ${phone}.\nKindly confirm my order.`
+        );
+
+        localStorage.removeItem("cart");
+        document.getElementById("checkoutForm").reset();
+        displayCartSummary();
+        updateTotal();
+
+        window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
       } catch (err) {
         alert("Error saving order: " + err.message);
       }
     });
-  </script></body>
+  </script>
+</body>
 </html>
+
+
+
+
+
+
