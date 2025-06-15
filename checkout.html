@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,9 +13,7 @@
     <div class="max-w-6xl mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold">Ask My Shoe</h1>
     </div>
-  </header>
-
-  <main class="max-w-6xl mx-auto p-6 mt-6">
+  </header>  <main class="max-w-6xl mx-auto p-6 mt-6">
     <section class="bg-white p-6 rounded-lg shadow">
       <h2 class="text-xl font-semibold mb-4">Delivery Information</h2>
       <form id="checkoutForm" class="space-y-4">
@@ -26,67 +25,64 @@
         <input id="address" type="text" placeholder="Address" class="w-full border rounded px-3 py-2" required>
         <input id="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full border rounded px-3 py-2">
         <input id="city" type="text" placeholder="City" class="w-full border rounded px-3 py-2" required>
-        <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required>
+        <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required><label class="block font-medium mb-1">Shipping Method</label>
+    <select id="shippingMethod" class="w-full border rounded px-3 py-2" required>
+      <option value="nairobi g4s">Nairobi G4S - KES 350</option>
+      <option value="nearby counties">Nearby Counties - KES 400</option>
+      <option value="nairobi cbd wells fargo">Nairobi CBD (Wells Fargo) - KES 400</option>
+      <option value="nairobi near cbd">Nairobi near CBD - KES 400</option>
+      <option value="outside nairobi">Outside Nairobi - KES 450</option>
+      <option value="far counties">Far Counties - KES 500</option>
+      <option value="nairobi far">Nairobi far from CBD - KES 500</option>
+      <option value="nairobi rider">Nairobi with Rider - KES 500</option>
+    </select>
 
-        <label class="block font-medium mb-1">Shipping Method</label>
-        <select id="shippingMethod" class="w-full border rounded px-3 py-2" required>
-          <option value="nairobi-g4s">Within Nairobi (Kitengela, Kikuyu, Juja) - KES 350</option>
-          <option value="outside-near">Outside Nairobi (Nearby Counties) - KES 400</option>
-          <option value="nairobi-cbd-wells">Within Nairobi (CBD - Wells Fargo) - KES 400</option>
-          <option value="nairobi-near-cbd">Within Nairobi (Near CBD) - KES 400</option>
-          <option value="outside">Outside Nairobi - KES 450</option>
-          <option value="outside-far">Outside Nairobi (Far Counties) - KES 500</option>
-          <option value="nairobi-far">Within Nairobi (Far from CBD) - KES 500</option>
-          <option value="nairobi-rider">Within Nairobi (Kitengela, Kikuyu, Juja - Rider) - KES 500</option>
-        </select>
+    <div class="text-right text-sm text-gray-500 mt-2">
+      Delivery Fee: <span id="deliveryFee">Ksh 0</span>
+    </div>
 
-        <div class="text-right text-sm text-gray-500 mt-2">
-          Delivery Fee: <span id="deliveryFee">Ksh 0</span>
-        </div>
+    <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">
+      Total: KSh 0
+    </div>
 
-        <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">
-          Total: KSh 0
-        </div>
+    <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded">
+      I’ve Paid – Confirm via WhatsApp
+    </button>
+  </form>
 
-        <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded">
-          I’ve Paid – Confirm via WhatsApp
-        </button>
-      </form>
+  <div class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded">
+    <h3 class="font-bold mb-1">📢 Payment Instructions</h3>
+    <ul class="list-disc ml-6 text-sm">
+      <li>Go to your M-PESA menu</li>
+      <li>Select Lipa na M-PESA</li>
+      <li>Select Paybill</li>
+      <li>Enter Paybill Number: <strong>247247</strong></li>
+      <li>Enter Account Number: <strong>0720380374</strong></li>
+      <li>Enter the amount shown above (Total)</li>
+      <li>Then click the button above to confirm via WhatsApp</li>
+    </ul>
+  </div>
 
-      <div class="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 rounded">
-        <h3 class="font-bold mb-1">📢 Payment Instructions</h3>
-        <ul class="list-disc ml-6 text-sm">
-          <li>Go to your M-PESA menu</li>
-          <li>Select Lipa na M-PESA</li>
-          <li>Select Paybill</li>
-          <li>Enter Paybill Number: <strong>247247</strong></li>
-          <li>Enter Account Number: <strong>0720380374</strong></li>
-          <li>Enter the exact amount shown above (Total)</li>
-          <li>After payment, click the button above to confirm via WhatsApp</li>
-        </ul>
-      </div>
+  <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
+    ✅ Your order has been placed successfully! Please click the button to confirm via WhatsApp.
+  </div>
+</section>
 
-      <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
-        ✅ Your order has been placed successfully! Please click the button to confirm via WhatsApp.
-      </div>
-    </section>
-  </main>
-
-  <script>
+  </main>  <script>
     Backendless.initApp(
       "0889EC61-CC4A-4B8E-BD71-C27140B34E26",
       "9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3"
     );
 
     const shippingFees = {
-      "nairobi-g4s": 350,
-      "outside-near": 400,
-      "nairobi-cbd-wells": 400,
-      "nairobi-near-cbd": 400,
-      "outside": 450,
-      "outside-far": 500,
-      "nairobi-far": 500,
-      "nairobi-rider": 500,
+      "nairobi g4s": 350,
+      "nearby counties": 400,
+      "nairobi cbd wells fargo": 400,
+      "nairobi near cbd": 400,
+      "outside nairobi": 450,
+      "far counties": 500,
+      "nairobi far": 500,
+      "nairobi rider": 500,
     };
 
     let subtotal = 0;
@@ -94,54 +90,15 @@
 
     function displayCartSummary() {
       cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const summaryDiv = document.createElement("div");
-      summaryDiv.classList.add("mb-4", "border", "rounded", "p-4", "bg-gray-100");
-      summaryDiv.id = "cart-summary";
-
-      let itemsHTML = "";
       subtotal = 0;
-
-      if (cart.length === 0) {
-        itemsHTML = "<p>Your cart is empty.</p>";
-      } else {
-        itemsHTML = cart.map(item => {
-          const quantity = item.quantity || 1;
-          const price = item.price || 0;
-          const itemSubtotal = quantity * price;
-          subtotal += itemSubtotal;
-
-          return `
-            <div class="border-b py-2">
-              <div class="font-semibold">${item.name}</div>
-              <div class="text-sm">Size: ${item.size || "N/A"}, Color: ${item.color || "N/A"}</div>
-              <div class="flex justify-between text-sm">
-                <span>Quantity: ${quantity}</span>
-                <span>Subtotal: KSh ${itemSubtotal.toLocaleString()}</span>
-              </div>
-            </div>
-          `;
-        }).join("");
-      }
-
-      summaryDiv.innerHTML = `
-        <h3 class="font-semibold mb-2">🛒 Cart Summary</h3>
-        ${itemsHTML}
-        <div class="flex justify-between mt-2 font-bold">
-          <span>Subtotal:</span>
-          <span id="cartSubtotal">KSh ${subtotal.toLocaleString()}</span>
-        </div>
-      `;
-
-      const form = document.getElementById("checkoutForm");
-      form.querySelector("#cart-summary")?.remove();
-      form.prepend(summaryDiv);
     }
 
     function updateTotal() {
       const shippingMethod = document.getElementById("shippingMethod").value;
       const deliveryFee = shippingFees[shippingMethod] || 0;
-      document.getElementById("deliveryFee").textContent = `Ksh ${deliveryFee}`;
+      subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
       const total = subtotal + deliveryFee;
+      document.getElementById("deliveryFee").textContent = `Ksh ${deliveryFee}`;
       document.getElementById("totalDisplay").textContent = `Total: KSh ${total.toLocaleString()}`;
     }
 
@@ -155,13 +112,10 @@
     document.getElementById("checkoutForm").addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      if (cart.length === 0) {
-        alert("Your cart is empty.");
-        return;
-      }
-
+      cart = JSON.parse(localStorage.getItem("cart")) || [];
       const shippingMethod = document.getElementById("shippingMethod").value;
       const deliveryFee = shippingFees[shippingMethod] || 0;
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
       const total = subtotal + deliveryFee;
       const firstName = document.getElementById("firstName").value;
       const lastName = document.getElementById("lastName").value;
@@ -184,32 +138,23 @@
 
       try {
         await Backendless.Data.of("Orders").save(order);
-
         document.getElementById("confirmationMessage").classList.remove("hidden");
         localStorage.removeItem("cart");
-        document.getElementById("checkoutForm").reset();
-        displayCartSummary();
-        updateTotal();
 
         const whatsappNumber = "254720380374";
-
-        let message = `🛒 Order Summary:\n`;
+        let message = `Hey, my name is ${fullName}. I’ve paid KES ${total} to Paybill 247247.\n\n`;
+        message += `🛒 Order Summary:\n`;
         cart.forEach(item => {
           const quantity = item.quantity || 1;
           const price = item.price || 0;
           message += `• ${item.name} (${item.size || "N/A"}, ${item.color || "N/A"}) x${quantity} - KES ${price * quantity}\n`;
         });
-
-        message += `\n🚚 Shipping: ${shippingMethod.replace(/-/g, " ")} (${deliveryFee})\n📦 Total Paid: KES ${total}\n\n`;
-        message = `Hello, I have paid KES ${total} to Paybill 247247.\nMy name is ${fullName}, phone: ${phone}.\n\n` + message;
+        message += `\n🚚 Delivery Location: ${shippingMethod} (KES ${deliveryFee})\n📦 Total Paid: KES ${total}\n📱 Phone: ${phone}`;
 
         window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank");
       } catch (err) {
         alert("Error saving order: " + err.message);
       }
     });
-  </script>
-</body>
-  </html>
-
-
+  </script></body>
+</html>
