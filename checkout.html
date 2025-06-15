@@ -16,7 +16,7 @@
   <main class="max-w-6xl mx-auto p-6 mt-6"> 
    <section class="bg-white p-6 rounded-lg shadow"> 
     <h2 class="text-xl font-semibold mb-4">Delivery Information</h2> 
-    <form id="checkoutForm" class="space-y-4"> <!-- Cart Summary Injected Here --> 
+    <form id="checkoutForm" class="space-y-4"> 
      <input id="email" type="email" placeholder="Email or mobile number" class="w-full border rounded px-3 py-2" required> 
      <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
       <input id="firstName" type="text" placeholder="First Name" class="w-full border rounded px-3 py-2" required> 
@@ -25,24 +25,42 @@
      <input id="address" type="text" placeholder="Address" class="w-full border rounded px-3 py-2" required> 
      <input id="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full border rounded px-3 py-2"> 
      <input id="city" type="text" placeholder="City" class="w-full border rounded px-3 py-2" required> 
-     <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required> <label class="block font-medium mb-1">Shipping Method</label> <select id="shippingMethod" class="w-full border rounded px-3 py-2" required> <option value="nairobi-g4s">Within Nairobi (Kitengela, Kikuyu, Juja) - KES 350</option> <option value="outside-near">Outside Nairobi (Nearby Counties) - KES 400</option> <option value="nairobi-cbd-wells">Within Nairobi (CBD - Wells Fargo) - KES 400</option> <option value="nairobi-near-cbd">Within Nairobi (Near CBD) - KES 400</option> <option value="outside">Outside Nairobi - KES 450</option> <option value="outside-far">Outside Nairobi (Far Counties) - KES 500</option> <option value="nairobi-far">Within Nairobi (Far from CBD) - KES 500</option> <option value="nairobi-rider">Within Nairobi (Kitengela, Kikuyu, Juja - Rider) - KES 500</option> </select> 
+     <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required> 
+
+     <label class="block font-medium mb-1">Shipping Method</label> 
+     <select id="shippingMethod" class="w-full border rounded px-3 py-2" required> 
+      <option value="nairobi-g4s">Within Nairobi (Kitengela, Kikuyu, Juja) - KES 350</option> 
+      <option value="outside-near">Outside Nairobi (Nearby Counties) - KES 400</option> 
+      <option value="nairobi-cbd-wells">Within Nairobi (CBD - Wells Fargo) - KES 400</option> 
+      <option value="nairobi-near-cbd">Within Nairobi (Near CBD) - KES 400</option> 
+      <option value="outside">Outside Nairobi - KES 450</option> 
+      <option value="outside-far">Outside Nairobi (Far Counties) - KES 500</option> 
+      <option value="nairobi-far">Within Nairobi (Far from CBD) - KES 500</option> 
+      <option value="nairobi-rider">Within Nairobi (Kitengela, Kikuyu, Juja - Rider) - KES 500</option> 
+     </select> 
+
      <div class="text-sm text-gray-600 mt-2">
-       Pay via <strong>M-PESA</strong>
-      <br> <strong>Paybill:</strong> 247247
-      <br> <strong>Account:</strong> 0720380374 
+       Pay via <strong>M-PESA</strong><br> 
+       <strong>Paybill:</strong> 247247<br> 
+       <strong>Account:</strong> 0720380374 
      </div> 
+
      <div class="text-right text-sm text-gray-500">
        Delivery Fee: <span id="deliveryFee">Ksh 0</span> 
      </div> 
      <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">
        Total: KSh 0 
-     </div> <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded"> I’ve Paid – Confirm via WhatsApp </button> 
+     </div> 
+
+     <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded"> I’ve Paid – Confirm via WhatsApp </button> 
     </form> 
+
     <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
       ✅ Your order has been placed successfully! Please click the button to confirm via WhatsApp. 
     </div> 
    </section> 
   </main> 
+
   <script>
     Backendless.initApp(
       "0889EC61-CC4A-4B8E-BD71-C27140B34E26",
@@ -135,33 +153,42 @@
       const deliveryFee = shippingFees[shippingMethod] || 0;
       const total = subtotal + deliveryFee;
 
+      const fullName = document.getElementById("firstName").value + " " + document.getElementById("lastName").value;
+      const phoneNumber = document.getElementById("phoneNumber").value;
+
       const order = {
         email: document.getElementById("email").value,
-        fullName: document.getElementById("firstName").value + " " + document.getElementById("lastName").value,
+        fullName,
         address: document.getElementById("address").value,
         apartment: document.getElementById("apartment").value,
         city: document.getElementById("city").value,
-        phoneNumber: document.getElementById("phoneNumber").value,
-        shippingMethod: shippingMethod,
-        deliveryFee: deliveryFee,
+        phoneNumber,
+        shippingMethod,
+        deliveryFee,
         paymentMethod: "mpesa",
-        total: total,
+        total,
         cartItems: cart
       };
+
+      // Prepare WhatsApp message with full order details
+      const itemLines = cart.map(item => {
+        const link = item.productId ? `https://bella63-glitch.github.io/Ask-My-Shoe/product-details.html?id=${item.productId}` : "";
+        return `• ${item.name} (${item.size || "N/A"}, ${item.color || "N/A"}) x${item.quantity || 1} - KES ${item.price || 0}${link ? `\n  👉 ${link}` : ""}`;
+      }).join("\n");
+
+      const whatsappMessage = `Hello, I have paid KES ${total} to Paybill 247247.\nMy name is ${fullName}, phone: ${phoneNumber}.\n\n🛒 Order Summary:\n${itemLines}\n\n🚚 Shipping: ${shippingMethod.replace(/-/g, " ")} (${deliveryFee})\n📦 Total Paid: KES ${total}`;
 
       try {
         await Backendless.Data.of("Orders").save(order);
 
         document.getElementById("confirmationMessage").classList.remove("hidden");
-
         localStorage.removeItem("cart");
         document.getElementById("checkoutForm").reset();
         displayCartSummary();
         updateTotal();
 
         const whatsappNumber = "254720380374";
-        const message = encodeURIComponent(`Hello, I have paid KES ${total} to Paybill 247247.\nMy name is ${order.fullName}, phone number is ${order.phoneNumber}.\nPlease confirm my order.`);
-        window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`, "_blank");
 
       } catch (err) {
         alert("Error saving order: " + err.message);
@@ -169,4 +196,4 @@
     });
   </script> 
  </body>
-  </html>
+</html>
