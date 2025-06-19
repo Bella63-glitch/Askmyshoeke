@@ -232,7 +232,7 @@
       try {
         gallery = JSON.parse(product.galleryImages || '[]');
       } catch (e) {
-        console.warn("Could not parse galleryImages JSON:", e);
+        console.warn("Invalid galleryImages JSON:", e);
       }
 
       const images = gallery.length > 0 ? gallery.map(ensureImageURL) : [ensureImageURL(product.image)];
@@ -318,7 +318,6 @@
 
         cart.push(cartItem);
         localStorage.setItem("cart", JSON.stringify(cart));
-
         window.location.href = "cart.html";
       });
     }
