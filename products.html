@@ -1,81 +1,63 @@
-
 <!doctype html>
-<html lang="en"> 
-<head> 
-  <meta charset="UTF-8"> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-  <title>Product Listing - AskMyShoe</title> 
-  <script src="https://cdn.jsdelivr.net/npm/backendless@7.0.4/dist/backendless.min.js"></script> 
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
-</head> 
-<body class="bg-gray-100 text-gray-800"> 
-
-  <!-- Header -->
-  <header style="background: linear-gradient(to right, #4B0082, #2E003E);" class="text-white p-4 shadow-md relative">
-    <div class="container mx-auto flex items-center justify-between">
-      <h1 class="text-2xl font-bold">AskMyShoe</h1>
-
-      <div class="flex items-center gap-4 relative">
-        <!-- Menu -->
-        <div class="relative">
-          <button id="menu-toggle" class="text-xl font-bold">☰</button>
-          <div id="menu-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-white text-black rounded shadow z-50">
-            <a href="index.html" class="block px-4 py-2 hover:bg-gray-100 text-sm">Home</a>
-            <a href="cart.html" class="block px-4 py-2 hover:bg-gray-100 text-sm">Cart</a>
-            <a href="checkout.html" class="block px-4 py-2 hover:bg-gray-100 text-sm">Checkout</a>
-          </div>
-        </div>
-
-        <!-- Cart (link to cart.html) -->
-        <a href="cart.html" class="relative text-xl">
-          🛒
-          <span id="cart-count" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-1">0</span>
-        </a>
-      </div>
+<html lang="en">   
+<head>   
+  <meta charset="UTF-8">   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+  <title>Product Listing - AskMyShoe</title>   
+  <script src="https://cdn.jsdelivr.net/npm/backendless@7.0.4/dist/backendless.min.js"></script>   
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">   
+</head>   
+<body class="bg-gray-100 text-gray-800">     
+  <header style="background: linear-gradient(to right, #4B0082, #2E003E);" class="text-white p-4 shadow-md relative">  
+    <div class="container mx-auto flex items-center justify-between">  
+      <h1 class="text-2xl font-bold">AskMyShoe</h1>  
+      <div class="flex items-center gap-4 relative">  
+        <div class="relative">  
+          <button id="menu-toggle" class="text-xl font-bold">☰</button>  
+          <div id="menu-dropdown" class="hidden absolute right-0 mt-2 w-40 bg-white text-black rounded shadow z-50">  
+            <a href="index.html" class="block px-4 py-2 hover:bg-gray-100 text-sm">Home</a>  
+            <a href="cart.html" class="block px-4 py-2 hover:bg-gray-100 text-sm">Cart</a>  
+            <a href="checkout.html" class="block px-4 py-2 hover:bg-gray-100 text-sm">Checkout</a>  
+          </div>  
+        </div>  
+        <a href="cart.html" class="relative text-xl">  
+          🛒  
+          <span id="cart-count" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs rounded-full px-1">0</span>  
+        </a>  
+      </div>  
     </div>
-  </header>
+  </header>    
 
-  <!-- Filters + Search -->
-  <div class="bg-white shadow sticky top-0 z-10 p-3 border-b flex flex-wrap gap-3 justify-between items-center">
-    <div class="flex items-center border border-gray-300 rounded p-2">
-      <span class="mr-2 text-gray-500">🔍</span>
-      <input id="searchInput" type="text" placeholder="Search products..." class="outline-none text-sm" />
+  <div class="bg-white shadow sticky top-0 z-10 p-3 border-b flex flex-wrap gap-3 justify-between items-center">  
+    <div class="flex items-center border border-gray-300 rounded p-2">  
+      <span class="mr-2 text-gray-500">🔍</span>  
+      <input id="searchInput" type="text" placeholder="Search products..." class="outline-none text-sm" />  
+    </div>  
+    <div class="flex flex-wrap gap-2 items-center">  
+      <select id="filter-brand" class="border p-2 rounded text-sm"> <option value="">All Brands</option> </select>   
+      <select id="filter-size" class="border p-2 rounded text-sm"> <option value="">All Sizes</option> </select>   
+      <select id="filter-color" class="border p-2 rounded text-sm"> <option value="">All Colors</option> </select>   
+      <select id="filter-price" class="border p-2 rounded text-sm">   
+        <option value="">All Prices</option>   
+        <option value="0-5000">Under KSh 5,000</option>   
+        <option value="5001-10000">KSh 5,001 - 10,000</option>   
+        <option value="10001-20000">KSh 10,001 - 20,000</option>   
+        <option value="20001">Over KSh 20,000</option>   
+      </select>   
     </div>
+  </div>    
 
-    <div class="flex flex-wrap gap-2 items-center">
-      <select id="filter-brand" class="border p-2 rounded text-sm"> 
-        <option value="">All Brands</option> 
-      </select> 
-      <select id="filter-size" class="border p-2 rounded text-sm"> 
-        <option value="">All Sizes</option> 
-      </select> 
-      <select id="filter-color" class="border p-2 rounded text-sm"> 
-        <option value="">All Colors</option> 
-      </select> 
-      <select id="filter-price" class="border p-2 rounded text-sm"> 
-        <option value="">All Prices</option> 
-        <option value="0-5000">Under KSh 5,000</option> 
-        <option value="5001-10000">KSh 5,001 - 10,000</option> 
-        <option value="10001-20000">KSh 10,001 - 20,000</option> 
-        <option value="20001">Over KSh 20,000</option> 
-      </select> 
-    </div>
-  </div>
+  <main class="p-4 container mx-auto">  
+    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>  
+  </main>    
 
-  <!-- Products Grid -->
-  <main class="p-4 container mx-auto">
-    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-  </main>
+  <footer style="background: linear-gradient(to right, #4B0082, #2E003E);" class="text-white text-xs text-center py-4">  
+    Contact: <a href="mailto:askmyshoe@gmail.com" class="underline">askmyshoe@gmail.com</a> |   
+    Phone: <a href="tel:+254720380374" class="underline">0720380374</a> |   
+    Facebook: Ask my shoe KE |   
+    TikTok: @Askmyshoeke  
+  </footer>    
 
-  <!-- Footer -->
-  <footer style="background: linear-gradient(to right, #4B0082, #2E003E);" class="text-white text-xs text-center py-4">
-    Contact: <a href="mailto:askmyshoe@gmail.com" class="underline">askmyshoe@gmail.com</a> | 
-    Phone: <a href="tel:+254720380374" class="underline">0720380374</a> | 
-    Facebook: Ask my shoe KE | 
-    TikTok: @Askmyshoeke
-  </footer>
-
-  <!-- Script -->
   <script>
     Backendless.initApp('0889EC61-CC4A-4B8E-BD71-C27140B34E26', '9BB7614B-9F7B-49F0-8C8C-65182EC8EBE3');
 
@@ -99,7 +81,6 @@
         if (p.size) sizes.add(p.size);
         if (p.color) colors.add(p.color);
       });
-
       populateSelect('filter-brand', [...brands]);
       populateSelect('filter-size', [...sizes]);
       populateSelect('filter-color', [...colors]);
@@ -120,10 +101,18 @@
       grid.innerHTML = "";
 
       products.forEach(product => {
+        let imageList = [];
+        try {
+          imageList = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
+        } catch (e) {
+          console.warn("Invalid image JSON:", e);
+        }
+        const firstImage = (Array.isArray(imageList) && imageList.length > 0) ? imageList[0] : 'https://via.placeholder.com/300x200';
+
         const card = document.createElement("div");
         card.className = "bg-white p-3 rounded shadow transition-transform transform hover:scale-105";
         card.innerHTML = `
-          <img src="${product.image || 'https://via.placeholder.com/300x200'}" alt="${product.name}" class="rounded mb-2 cursor-pointer" onclick="goToProduct('${product.objectId}')">
+          <img src="${firstImage}" alt="${product.name}" class="rounded mb-2 cursor-pointer" onclick="goToProduct('${product.objectId}')">
           <h2 class="font-semibold text-sm cursor-pointer text-purple-800 hover:underline" onclick="goToProduct('${product.objectId}')">${product.name}</h2>
           <p class="text-red-600 font-bold text-sm">KSh ${product.price}</p>
           <p class="text-yellow-500 text-sm">&#9733;&#9733;&#9733;&#9733;&#9734; (${product.rating || 'N/A'})</p>
@@ -141,12 +130,17 @@
       const product = allProducts.find(p => p.objectId === productId);
       if (!product) return;
 
+      let imageList = [];
+      try {
+        imageList = typeof product.images === 'string' ? JSON.parse(product.images) : product.images;
+      } catch (e) {}
+
       const cartItem = {
         productId: product.objectId,
         productName: product.name,
         price: product.price,
         quantity: 1,
-        productimage: product.image
+        productimage: (Array.isArray(imageList) && imageList.length > 0) ? imageList[0] : ''
       };
 
       try {
@@ -190,7 +184,6 @@
       displayProducts(filtered);
     }
 
-    // Listeners
     document.querySelectorAll('select').forEach(select => {
       select.addEventListener("change", applyFilters);
     });
@@ -201,17 +194,12 @@
       displayProducts(filtered);
     });
 
-    // Toggle menu dropdown
     document.getElementById("menu-toggle").addEventListener("click", () => {
       document.getElementById("menu-dropdown").classList.toggle("hidden");
     });
 
-    // Initial load
     loadProducts();
     updateCartCount();
-  </script> 
-</body>
+  </script>
+</body>  
 </html>
-
-
-
