@@ -54,7 +54,8 @@
       display: flex;
       gap: 10px;
       margin-top: 10px;
-      flex-wrap: wrap;
+      overflow-x: auto;
+      padding-bottom: 10px;
     }
     .thumbnails img {
       width: 60px;
@@ -63,6 +64,7 @@
       cursor: pointer;
       border: 2px solid transparent;
       border-radius: 5px;
+      flex-shrink: 0;
     }
     .thumbnails img.active {
       border-color: orange;
@@ -146,9 +148,6 @@
       font-size: 0.95em;
       margin-top: 40px;
     }
-    footer p {
-      margin: 6px 0;
-    }
     @media (max-width: 768px) {
       #product-container {
         flex-direction: column;
@@ -200,15 +199,28 @@
     function renderProduct(product) {
       const container = document.getElementById("product-container");
 
-      // Use galleryImages or fallback to single image
-      const galleryRaw = product.galleryImages || product.gallery || '';
-      const gallery = typeof galleryRaw === 'string' ? galleryRaw.split(',').map(i => i.trim()).filter(i => i) : [];
-      const images = gallery.length > 0 ? gallery.map(ensureImageURL) : [ensureImageURL(product.image)];
+      // Parse images from JSON array field
+      let images = [];
+      try {
+        if (Array.isArray(product.images)) {
+          images = product.images.map(ensureImageURL);
+        } else if (typeof product.images === 'string') {
+          const parsed = JSON.parse(product.images);
+          if (Array.isArray(parsed)) {
+            images = parsed.map(ensureImageURL);
+          }
+        }
+      } catch (e) {
+        console.warn("Invalid image format:", e);
+      }
+
+      if (images.length === 0) {
+        images.push(ensureImageURL(product.image));
+      }
 
       const currentPrice = parseFloat(product.price);
       const originalPrice = parseFloat(product.originalPrice || currentPrice);
       const discount = calculateDiscount(originalPrice, currentPrice);
-
       const productId = product.objectId;
       const sizes = product.sizes || ['38', '39', '40', '41'];
 
@@ -251,7 +263,7 @@
         </div>
       `;
 
-      // Image thumbnail click logic
+      // Image thumbnail click
       document.querySelectorAll('.thumbnails img').forEach(img => {
         img.addEventListener('click', () => {
           document.getElementById('main-image').src = img.src;
@@ -260,7 +272,7 @@
         });
       });
 
-      // Size selection logic
+      // Size selection
       document.querySelectorAll('.size-option').forEach(sizeEl => {
         sizeEl.addEventListener('click', () => {
           document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
@@ -269,7 +281,7 @@
         });
       });
 
-      // Add to cart logic
+      // Add to cart
       document.getElementById("addToCartBtn").addEventListener("click", () => {
         if (!selectedSize) {
           alert("Please select a size before adding to cart.");
@@ -277,7 +289,6 @@
         }
 
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
         const cartItem = {
           productId: product.objectId,
           name: product.name,
