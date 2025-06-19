@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html lang="en"> 
 <head> 
   <meta charset="UTF-8"> 
@@ -10,204 +11,181 @@
       font-family: Arial, sans-serif;
       margin: 0;
       background: #f9f9f9;
-    }
+    }header {
+  background: linear-gradient(to right, #4b0082, #800080);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4em;
+}
 
-    header {
-      background: linear-gradient(to right, #4b0082, #800080);
-      color: white;
-      padding: 15px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 1.4em;
-    }
+header .logo {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
 
-    header .logo {
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
+.cart-icon {
+  text-decoration: none;
+  color: white;
+  font-size: 1.4em;
+}
 
-    .cart-icon {
-      text-decoration: none;
-      color: white;
-      font-size: 1.4em;
-    }
+#product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
 
-    #product-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      max-width: 1000px;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-    }
+.image-gallery {
+  flex: 1;
+  min-width: 300px;
+}
 
-    .image-gallery {
-      flex: 1;
-      min-width: 300px;
-    }
+.main-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
 
-    .main-image {
-      width: 100%;
-      max-height: 400px;
-      object-fit: contain;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-    }
+.thumbnails {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
 
-    .thumbnails {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
+.thumbnails img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 5px;
+}
 
-    .thumbnails img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      cursor: pointer;
-      border: 2px solid transparent;
-      border-radius: 5px;
-    }
+.thumbnails img.active {
+  border-color: orange;
+}
 
-    .thumbnails img.active {
-      border-color: orange;
-    }
+.details {
+  flex: 1;
+  min-width: 300px;
+}
 
-    .details {
-      flex: 1;
-      min-width: 300px;
-    }
+.details h1 {
+  margin-bottom: 10px;
+}
 
-    .details h1 {
-      margin-bottom: 10px;
-    }
+.price {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
 
-    .price {
-      font-size: 1.2em;
-      margin-bottom: 15px;
-    }
+.price .current {
+  color: green;
+  font-weight: bold;
+  margin-right: 10px;
+}
 
-    .price .current {
-      color: green;
-      font-weight: bold;
-      margin-right: 10px;
-    }
+.price .original {
+  text-decoration: line-through;
+  color: #999;
+  margin-right: 10px;
+}
 
-    .price .original {
-      text-decoration: line-through;
-      color: #999;
-      margin-right: 10px;
-    }
+.price .discount {
+  color: red;
+  font-weight: bold;
+}
 
-    .price .discount {
-      color: red;
-      font-weight: bold;
-    }
+.sizes span {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  margin: 5px 5px 10px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
 
-    .sizes span {
-      display: inline-block;
-      padding: 6px 12px;
-      border: 1px solid #ddd;
-      margin: 5px 5px 10px 0;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s, border-color 0.3s;
-    }
+.sizes span.selected {
+  background-color: orange;
+  color: white;
+  border-color: orange;
+}
 
-    .sizes span.selected {
-      background-color: orange;
-      color: white;
-      border-color: orange;
-    }
+.actions {
+  margin-top: 15px;
+}
 
-    .actions {
-      margin-top: 15px;
-    }
+.actions a,
+.actions button {
+  display: inline-block;
+  margin: 5px 10px 5px 0;
+  padding: 10px 20px;
+  font-size: 1em;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
 
-    .actions a,
-    .actions button {
-      display: inline-block;
-      margin: 5px 10px 5px 0;
-      padding: 10px 20px;
-      font-size: 1em;
-      text-decoration: none;
-      border-radius: 5px;
-      border: none;
-      cursor: pointer;
-    }
+.add-cart {
+  background: orange;
+  color: white;
+}
 
-    .add-cart {
-      background: orange;
-      color: white;
-    }
+.buy-now {
+  background: green;
+  color: white;
+}
 
-    .buy-now {
-      background: green;
-      color: white;
-    }
+footer {
+  background: linear-gradient(to right, #4b0082, #800080);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.95em;
+  margin-top: 40px;
+}
 
-    .tab {
-      margin-top: 25px;
-    }
+footer p {
+  margin: 6px 0;
+}
 
-    .tab h3 {
-      margin-bottom: 10px;
-    }
+@media (max-width: 768px) {
+  #product-container {
+    flex-direction: column;
+  }
+}
 
-    .error {
-      color: red;
-      font-weight: bold;
-    }
-
-    footer {
-      background: linear-gradient(to right, #4b0082, #800080);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 0.95em;
-      margin-top: 40px;
-    }
-
-    footer p {
-      margin: 6px 0;
-    }
-
-    @media (max-width: 768px) {
-      #product-container {
-        flex-direction: column;
-      }
-    }
   </style> 
 </head> 
 <body> 
   <header>
     <div class="logo">Ask My Shoe</div>
     <a href="cart.html" class="cart-icon" title="View Cart">🛒</a>
-  </header>
-
-  <div id="product-container">Loading product...</div> 
-
-  <footer>
+  </header>  <div id="product-container">Loading product...</div>   <footer>
     <p><strong>Contact Details</strong></p>
     <p>Email: Askmyshoe@gmail.com</p>
     <p>Phone: 0720380374</p>
     <p>Facebook: Ask my shoe KE</p>
     <p>TikTok: @Askmyshoeke</p>
-  </footer>
-
-  <script>
+  </footer>  <script>
     const APP_ID = "0889EC61-CC4A-4B8E-BD71-C27140B34E26";
     const API_KEY = "63AB1DF8-175A-48B6-8F9C-EE24F2E58F21";
     const TABLE_NAME = "Products";
     const IMAGE_BASE_URL = "https://backendlessappcontent.com/0889EC61-CC4A-4B8E-BD71-C27140B34E26/1C1E9D44-CBC2-43B3-B83C-2B9E53F58E9A/files/products-images/";
 
     Backendless.initApp(APP_ID, API_KEY);
-
-    let selectedSize = null;
 
     function getProductIdFromURL() {
       const params = new URLSearchParams(window.location.search);
@@ -220,125 +198,64 @@
       return `-${Math.round(discount)}%`;
     }
 
-    function ensureImageURL(path) {
-      if (!path) return "https://via.placeholder.com/400";
-      return path.startsWith("http") ? path : IMAGE_BASE_URL + path;
+    function createImageGallery(images) {
+      if (!images || !images.length) return '<p>No image found</p>';
+
+      const mainImage = `<img src="${IMAGE_BASE_URL + images[0]}" class="main-image" id="mainImage">`;
+      const thumbnails = images.map((img, i) => `<img src="${IMAGE_BASE_URL + img}" class="thumb ${i === 0 ? 'active' : ''}" onclick="document.getElementById('mainImage').src='${IMAGE_BASE_URL + img}';document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));this.classList.add('active');">`).join('');
+
+      return `${mainImage}<div class="thumbnails">${thumbnails}</div>`;
     }
 
     function renderProduct(product) {
-      const container = document.getElementById("product-container");
+      const discount = calculateDiscount(product.originalprice, product.currentprice);
+      const sizes = product.size?.split(',') || [];
+      const sizeOptions = sizes.map(size => `<span onclick="document.querySelectorAll('.sizes span').forEach(s => s.classList.remove('selected'));this.classList.add('selected');">${size}</span>`).join('');
 
-      let gallery = [];
-      try {
-        gallery = JSON.parse(product.galleryImages || '[]');
-      } catch (e) {
-        console.warn("Invalid galleryImages JSON:", e);
-      }
-
-      const images = gallery.length > 0 ? gallery.map(ensureImageURL) : [ensureImageURL(product.image)];
-
-      const currentPrice = parseFloat(product.price);
-      const originalPrice = parseFloat(product.originalPrice || currentPrice);
-      const discount = calculateDiscount(originalPrice, currentPrice);
-
-      const productId = product.objectId;
-      const sizes = product.sizes || ['38', '39', '40', '41'];
-
-      container.innerHTML = `
+      document.getElementById("product-container").innerHTML = `
         <div class="image-gallery">
-          <img id="main-image" class="main-image" src="${images[0]}" alt="Product Image">
-          <div class="thumbnails">
-            ${images.map((img, i) => `
-              <img src="${img}" class="${i === 0 ? 'active' : ''}" data-index="${i}">
-            `).join('')}
-          </div>
+          ${createImageGallery(product.images)}
         </div>
         <div class="details">
-          <h1>${product.name || 'No name provided'}</h1>
+          <h1>${product.productname}</h1>
           <div class="price">
-            <span class="current">KSh ${currentPrice.toLocaleString()}</span>
-            ${originalPrice > currentPrice ? `
-              <span class="original">KSh ${originalPrice.toLocaleString()}</span>
-              <span class="discount">${discount}</span>` : ''
-            }
+            <span class="current">KES ${product.currentprice}</span>
+            <span class="original">${product.originalprice ? `KES ${product.originalprice}` : ''}</span>
+            <span class="discount">${discount}</span>
           </div>
-          <div class="sizes">
-            <strong>Sizes:</strong><br>
-            ${sizes.map(size => `
-              <span class="size-option" data-size="${size}">${size}</span>
-            `).join('')}
-          </div>
+          <div class="sizes">${sizeOptions}</div>
           <div class="actions">
-            <button class="add-cart" id="addToCartBtn">🛒 Add to Cart</button>
-            <a href="checkout.html?id=${productId}" class="buy-now">Buy Now</a>
+            <button class="add-cart">Add to Cart</button>
+            <button class="buy-now">Buy Now</button>
           </div>
           <div class="tab">
             <h3>Description</h3>
-            <p>${product.description || "No description provided."}</p>
+            <p>${product.description || 'No description provided.'}</p>
           </div>
-          <div class="tab">
-            <h3>Reviews</h3>
-            <p>No reviews yet.</p>
-          </div>
-        </div>
-      `;
-
-      document.querySelectorAll('.thumbnails img').forEach(img => {
-        img.addEventListener('click', () => {
-          document.getElementById('main-image').src = img.src;
-          document.querySelectorAll('.thumbnails img').forEach(i => i.classList.remove('active'));
-          img.classList.add('active');
-        });
-      });
-
-      document.querySelectorAll('.size-option').forEach(sizeEl => {
-        sizeEl.addEventListener('click', () => {
-          document.querySelectorAll('.size-option').forEach(el => el.classList.remove('selected'));
-          sizeEl.classList.add('selected');
-          selectedSize = sizeEl.getAttribute('data-size');
-        });
-      });
-
-      document.getElementById("addToCartBtn").addEventListener("click", () => {
-        if (!selectedSize) {
-          alert("Please select a size before adding to cart.");
-          return;
-        }
-
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        const cartItem = {
-          productId: product.objectId,
-          name: product.name,
-          price: currentPrice,
-          size: selectedSize,
-          color: product.color || "N/A",
-          image: product.image || "",
-        };
-
-        cart.push(cartItem);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        window.location.href = "cart.html";
-      });
+        </div>`;
     }
 
     async function loadProduct() {
       const id = getProductIdFromURL();
-      if (!id) {
-        document.getElementById("product-container").innerHTML = '<div class="error">No product ID found in URL.</div>';
-        return;
-      }
-
+      if (!id) return document.getElementById("product-container").innerHTML = "<p class='error'>Product ID missing</p>";
       try {
         const product = await Backendless.Data.of(TABLE_NAME).findById(id);
         renderProduct(product);
-      } catch (error) {
-        console.error(error);
-        document.getElementById("product-container").innerHTML = '<div class="error">Error loading product. Please check console.</div>';
+      } catch (err) {
+        console.error(err);
+        document.getElementById("product-container").innerHTML = "<p class='error'>Failed to load product</p>";
       }
     }
 
     loadProduct();
-  </script> 
-</body>
+  </script></body>
 </html>
+
+
+
+
+
+
+
+
+
