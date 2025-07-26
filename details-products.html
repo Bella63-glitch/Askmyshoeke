@@ -5,6 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Product Details</title>
   <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+  
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '868857835187513');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=868857835187513&ev=PageView&noscript=1"/>
+  </noscript>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -302,6 +319,18 @@
         localStorage.setItem("cart", JSON.stringify(cart));
         window.location.href = "cart.html";
       });
+
+      // Add the ViewContent event after the product data is rendered
+      if (typeof fbq === 'function') {
+        fbq('track', 'ViewContent', {
+            content_name: product.name,
+            content_category: 'Shoes', // You can change this to a dynamic value if available
+            content_ids: [product.objectId],
+            content_type: 'product',
+            value: currentPrice,
+            currency: 'KSh'
+        });
+      }
     }
 
     async function loadProduct() {
