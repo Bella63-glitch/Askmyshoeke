@@ -1,73 +1,64 @@
-<!doctype html>  
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title>Checkout - Ask My Shoe</title>  
-  <script src="https://cdn.tailwindcss.com"></script>  
-  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>  
-</head>  
-<body class="bg-gray-50 font-sans">  
-  <header class="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-6 px-4 shadow-md">  
-    <div class="max-w-6xl mx-auto flex justify-between items-center">  
-      <h1 class="text-2xl font-bold">Ask My Shoe</h1>  
-    </div>  
-  </header>  
-  
-  <main class="max-w-6xl mx-auto p-6 mt-6">  
-    <section class="bg-white p-6 rounded-lg shadow">  
-      <h2 class="text-xl font-semibold mb-4">Delivery Information</h2>  
-      <form id="checkoutForm" class="space-y-4">  
-        <!-- Cart Summary -->  
-        <div id="cart-summary" class="mb-4 border rounded p-4 bg-gray-100 hidden">  
-          <h3 class="font-semibold mb-2">🛒 Order Summary</h3>  
-          <div id="cart-items"></div>  
-          <div class="flex justify-between mt-2 font-bold">  
-            <span>Subtotal:</span>  
-            <span id="cartSubtotal">KSh 0</span>  
-          </div>  
-        </div>  
-  
-        <input id="email" type="email" placeholder="Email or mobile number" class="w-full border rounded px-3 py-2" required />  
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">  
-          <input id="firstName" type="text" placeholder="First Name" class="w-full border rounded px-3 py-2" required />  
-          <input id="lastName" type="text" placeholder="Last Name" class="w-full border rounded px-3 py-2" required />  
-        </div>  
-        <input id="address" type="text" placeholder="Address" class="w-full border rounded px-3 py-2" required />  
-        <input id="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full border rounded px-3 py-2" />  
-        <input id="city" type="text" placeholder="City" class="w-full border rounded px-3 py-2" required />  
-        <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required />  
-  
-        <label class="block font-medium mb-1">Shipping Method</label>  
-        <select id="shippingMethod" class="w-full border rounded px-3 py-2" required>  
-          <option value="nairobi-g4s">Within Nairobi (Kitengela, Kikuyu, Juja) - KES 350</option>  
-          <option value="outside-near">Outside Nairobi (Nearby Counties) - KES 400</option>  
-          <option value="nairobi-cbd-wells">Within Nairobi (CBD - Wells Fargo) - KES 400</option>  
-          <option value="nairobi-near-cbd">Within Nairobi (Near CBD) - KES 400</option>  
-          <option value="outside">Outside Nairobi - KES 450</option>  
-          <option value="outside-far">Outside Nairobi (Far Counties) - KES 500</option>  
-          <option value="nairobi-far">Within Nairobi (Far from CBD) - KES 500</option>  
-          <option value="nairobi-rider">Within Nairobi (Kitengela, Kikuyu, Juja - Rider) - KES 500</option>  
-        </select>  
-  
-        <div class="text-right text-sm text-gray-500 mt-1">  
-          Delivery Fee: <span id="deliveryFee">KSh 0</span>  
-        </div>  
-        <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">  
-          Total: KSh 0  
-        </div>  
-  
-        <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded mt-2">  
-          Confirm Order via WhatsApp  
-        </button>  
-      </form>  
-  
-      <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">  
-        ✅ Your order has been placed successfully! You’ll be redirected to WhatsApp to confirm.  
-      </div>  
-    </section>  
-  </main>  
-  
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Checkout - Ask My Shoe</title> 
+  <script src="https://cdn.tailwindcss.com"></script> 
+  <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script> <!-- Meta Pixel Code --> 
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '799356469739980'); 
+    fbq('track', 'PageView');
+  </script> 
+  <noscript>
+    &lt;img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=799356469739980&amp;amp;ev=PageView&amp;amp;noscript=1"&gt; 
+  </noscript> <!-- End Meta Pixel Code --> 
+ </head> 
+ <body class="bg-gray-50 font-sans"> 
+  <header class="bg-gradient-to-r from-purple-900 to-purple-700 text-white py-6 px-4 shadow-md"> 
+   <div class="max-w-6xl mx-auto flex justify-between items-center"> 
+    <h1 class="text-2xl font-bold">Ask My Shoe</h1> 
+   </div> 
+  </header> 
+  <main class="max-w-6xl mx-auto p-6 mt-6"> 
+   <section class="bg-white p-6 rounded-lg shadow"> 
+    <h2 class="text-xl font-semibold mb-4">Delivery Information</h2> 
+    <form id="checkoutForm" class="space-y-4"> <!-- Cart Summary --> 
+     <div id="cart-summary" class="mb-4 border rounded p-4 bg-gray-100 hidden"> 
+      <h3 class="font-semibold mb-2">🛒 Order Summary</h3> 
+      <div id="cart-items"></div> 
+      <div class="flex justify-between mt-2 font-bold"> <span>Subtotal:</span> <span id="cartSubtotal">KSh 0</span> 
+      </div> 
+     </div> 
+     <input id="email" type="email" placeholder="Email or mobile number" class="w-full border rounded px-3 py-2" required> 
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> 
+      <input id="firstName" type="text" placeholder="First Name" class="w-full border rounded px-3 py-2" required> 
+      <input id="lastName" type="text" placeholder="Last Name" class="w-full border rounded px-3 py-2" required> 
+     </div> 
+     <input id="address" type="text" placeholder="Address" class="w-full border rounded px-3 py-2" required> 
+     <input id="apartment" type="text" placeholder="Apartment, suite, etc. (optional)" class="w-full border rounded px-3 py-2"> 
+     <input id="city" type="text" placeholder="City" class="w-full border rounded px-3 py-2" required> 
+     <input id="phoneNumber" type="tel" placeholder="Phone" class="w-full border rounded px-3 py-2" required> <label class="block font-medium mb-1">Shipping Method</label> <select id="shippingMethod" class="w-full border rounded px-3 py-2" required> <option value="nairobi-g4s">Within Nairobi (Kitengela, Kikuyu, Juja) - KES 350</option> <option value="outside-near">Outside Nairobi (Nearby Counties) - KES 400</option> <option value="nairobi-cbd-wells">Within Nairobi (CBD - Wells Fargo) - KES 400</option> <option value="nairobi-near-cbd">Within Nairobi (Near CBD) - KES 400</option> <option value="outside">Outside Nairobi - KES 450</option> <option value="outside-far">Outside Nairobi (Far Counties) - KES 500</option> <option value="nairobi-far">Within Nairobi (Far from CBD) - KES 500</option> <option value="nairobi-rider">Within Nairobi (Kitengela, Kikuyu, Juja - Rider) - KES 500</option> </select> 
+     <div class="text-right text-sm text-gray-500 mt-1">
+       Delivery Fee: <span id="deliveryFee">KSh 0</span> 
+     </div> 
+     <div id="totalDisplay" class="text-right text-lg font-semibold text-purple-800 mt-2">
+       Total: KSh 0 
+     </div> <button type="submit" class="w-full bg-purple-700 hover:bg-purple-800 text-white py-2 rounded mt-2"> Confirm Order via WhatsApp </button> 
+    </form> 
+    <div id="confirmationMessage" class="hidden mt-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded">
+      ✅ Your order has been placed successfully! You’ll be redirected to WhatsApp to confirm. 
+    </div> 
+   </section> 
+  </main> 
   <script>  
     Backendless.initApp(  
       "0889EC61-CC4A-4B8E-BD71-C27140B34E26",  
@@ -192,6 +183,7 @@
         alert("Error saving order: " + err.message);  
       }  
     });  
-  </script>  
-</body>  
-</html>
+  </script> 
+ </body>
+  </html>
+
