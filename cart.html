@@ -16,12 +16,12 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '868857835187513');
+    fbq('init', '1780936519476426');
     fbq('track', 'PageView');
   </script>
   <noscript>
     <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=868857835187513&ev=PageView&noscript=1"/>
+    src="https://www.facebook.com/tr?id=1780936519476426&ev=PageView&noscript=1"/>
   </noscript>
   <!-- End Meta Pixel Code -->
 </head>
@@ -41,7 +41,7 @@
       <div id="cartItems"></div>
       <div class="mt-6 flex justify-between items-center">
         <div class="text-lg font-semibold">Total: KSh <span id="totalAmount">0</span></div>
-        <a href="checkout.html" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">Proceed to Checkout</a>
+        <a href="checkout.html" id="checkoutBtn" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">Proceed to Checkout</a>
       </div>
     </section>
   </main>
@@ -67,9 +67,25 @@
     function changeQuantity(index, delta) {
       cart[index].quantity = Math.max(1, (cart[index].quantity || 1) + delta);
       updateCart();
+
+      // Fire AddToCart pixel event for quantity change
+      fbq('track', 'AddToCart', {
+        content_name: cart[index].name,
+        content_ids: [cart[index].id || 'SKU'],
+        content_type: 'product',
+        value: cart[index].price,
+        currency: 'KES'
+      });
     }
 
     function removeItem(index) {
+      fbq('track', 'AddToCart', {
+        content_name: cart[index].name,
+        content_ids: [cart[index].id || 'SKU'],
+        content_type: 'product',
+        value: cart[index].price,
+        currency: 'KES'
+      });
       cart.splice(index, 1);
       updateCart();
     }
@@ -121,28 +137,18 @@
       document.getElementById("totalAmount").textContent = total.toLocaleString();
     }
 
-    document.addEventListener("DOMContentLoaded", renderCart);
+    // Track InitiateCheckout when user clicks checkout button
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCart();
+
+      document.getElementById("checkoutBtn").addEventListener("click", () => {
+        const totalAmount = document.getElementById("totalAmount").textContent.replace(/,/g, "");
+        fbq('track', 'InitiateCheckout', {
+          value: parseFloat(totalAmount),
+          currency: 'KES'
+        });
+      });
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
